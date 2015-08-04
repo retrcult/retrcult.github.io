@@ -30,6 +30,14 @@ body {
   width: 100%;
 }
 
+.site-name {
+  font-family: "ctb_hanamin", Georgia, serif;
+}
+
+.site-description {
+  font-family: "ctb_sourcehansans-tc-light", Georgia, serif;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $helveticaNeue;
   color: $darkerGray;
