@@ -44,7 +44,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-title;
-  font-weight: normal;
+  font-weight: 400;
   color: $c1;
   line-height: 1.7;
   margin: 1em 0 15px;
@@ -115,7 +115,7 @@ em, i {
 }
 
 strong, b {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 img {
@@ -261,14 +261,17 @@ nav {
 // .main
 //
 
-.posts > .post {
-  padding-bottom: 2em;
-  border-bottom: 1px solid $c4;
-}
+.posts {
 
-.posts > .post:last-child {
-  padding-bottom: 1em;
-  border-bottom: none;
+  > .post {
+    padding-bottom: 2em;
+    border-bottom: 1px solid $c4;
+
+    &:last-child {
+      padding-bottom: 1em;
+      border-bottom: none;
+    }
+  }
 }
 
 .post {
@@ -300,9 +303,10 @@ nav {
   }
 }
 
-.pageTitle {
+#postTitle {
   font-weight: 700;
 }
+
 
 .wrapper-footer {
   margin: 0 auto;
