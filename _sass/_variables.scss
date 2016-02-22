@@ -8,19 +8,71 @@ $blue: #4183C4;
 
 // Grays
 $black: #000;
-$darkerGray: #222;
-$darkGray: #333;
-$gray: #666;
-$lightGray: #eee;
+$darkerGray: #2a282b;
+$darkGray: #3b3b3b;
+$gray: #6f6f6f;
+$lightGray: #e8e8e8;
 $white: #fff;
 
+
+
 // Font stacks
-$helvetica: Helvetica, Arial, sans-serif;
+@font-face {
+  font-family: 'Josefin Sans';
+  src: local('Josefin Sans'), local('JosefinSans'),
+       url(/fonts/josefinsans-regular.woff) format('woff');
+  font-style: normal;
+  font-weight: 400;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  src: local('Quattrocento'),
+       url(/fonts/quattrocento.woff) format('woff');
+  font-style: normal;
+  font-weight: 400;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+$font-default: "Avenir Next", Arial, "Lantinghei SC", "Hiragino Sans GB", sans-serif;
+$font-title: "Josefin Sans", $font-default;
+$font-content: "Quattrocento", $font-default;
+$font-serif: Palatino, Garamond, Georgia, "STSong", "SimSun", serif;
+$font-mono: "Avenir Next", 'Lucida Grande', Tahoma, Verdana, Arial, sans-serif;
 $helveticaNeue: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $georgia: Georgia, serif;
 
+
+$em-base: 18px !default;
+// px to em
+// margin-bottom: em(22);
+@function strip-unit($val) {
+  @return ($val / ($val * 0 + 1));
+}
+@function em($pxval, $base: $em-base) {
+  @if not unitless($pxval) {
+      $pxval: strip-unit($pxval);
+  }
+  @if not unitless($base) {
+      $base: strip-unit($base);
+  }
+  @return ($pxval / $base) * 1em;
+}
+
+
 // Mobile breakpoints
+
+$break-points: (
+  sm: 620px,
+  lg: 960px
+  );
+
 @mixin mobile {
+  @media screen and (max-width: 640px) {
+    @content;
+  }
+}
+
+@mixin tablet {
   @media screen and (max-width: 640px) {
     @content;
   }

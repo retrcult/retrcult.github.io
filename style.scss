@@ -19,8 +19,12 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $helvetica;
+  font: 18px/1.4 $font-content;
   color: $darkGray;
+
+  @include mobile {
+    font: 14px/1.4 $font-content;
+  }
 }
 
 .container {
@@ -39,7 +43,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  font-family: $font-title;
   color: $darkerGray;
   font-weight: bold;
 
@@ -221,7 +225,7 @@ img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  font-family: $font-title;
   font-size: 18px;
 
   @include mobile {
