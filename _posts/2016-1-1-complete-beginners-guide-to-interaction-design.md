@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 给交互设计初学者的完全自学指南
+title: Complete Beginner's Guide to Interaction Design
 tags: [InteractionDesign]
 ---
 
