@@ -3,7 +3,7 @@ layout: default
 ---
 
 <article class="post">
-  <h1>{{ page.title }}</h1>
+  <h1 id="postTitle">{{ page.title }}</h1>
 
   <div class="entry">
     {{ content }}
@@ -11,6 +11,18 @@ layout: default
 
   <div class="date">
     Written on {{ page.date | date: "%B %e, %Y" }}
+  </div>
+    <div class="tags">
+    {% if post %}
+      {% assign tags = post.tags %}
+    {% else %}
+      {% assign tags = page.tags %}
+    {% endif %}
+    <span>Tags: </span>
+    {% for tag in tags %}
+      <a class="tag" href="/tags?tag={{tag}}">{{tag}}</a>
+      {% unless forloop.last %},{% endunless %}
+    {% endfor %}
   </div>
 
   {% include disqus.html %}

@@ -20,10 +20,10 @@ html {
 body {
 	background: $white;
   font: 18px/1.4 $font-content;
-  color: $darkGray;
+  color: $c2;
 
   @include mobile {
-    font: 14px/1.4 $font-content;
+    font: 16px/1.4 $font-content;
   }
 }
 
@@ -35,16 +35,16 @@ body {
 }
 
 .site-name {
-  font-family: "ctb_hanamin", Georgia, serif;
+  display: none;
 }
 
 .site-description {
-  font-family: "ctb_sourcehansans-tc-light", Georgia, serif;
+  display: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-title;
-  color: $darkerGray;
+  color: $c1;
   font-weight: bold;
 
   line-height: 1.7;
@@ -57,23 +57,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: em(28px);
+
   a {
     color: inherit;
   }
 }
 
 h2 {
-  font-size: 24px;
+  font-size: em(24px);
 }
 
 h3 {
-  font-size: 20px;
+  font-size: em(20px);
 }
 
 h4 {
-  font-size: 18px;
-  color: $gray;
+  font-size: em(18px);
+  color: $c2;
 }
 
 p {
@@ -81,17 +82,17 @@ p {
 }
 
 a {
-  color: $blue;
+  color: $c5;
   text-decoration: none;
 	cursor: pointer;
   &:hover, &:active {
-    color: $blue;
+    color: rgba($c5,0.88);
   }
 }
 
 ul, ol {
-  margin: 15px 0;
-  padding-left: 30px;
+  margin: em(15px) 0;
+  padding-left: em(30px);
 }
 
 ul {
@@ -127,19 +128,29 @@ img {
   max-width: none;
 }
 
+.date, .tags {
+  font-family: $font-title;
+  color: $c3;
+}
+
 .date {
-  font-style: italic;
-  color: $gray;
+  margin-top: 50px;
+}
+
+.tag {
+  //font-size: em(16px);
+  //color: inherit;
+  //border-bottom-color: currentColor !important;
 }
 
 // Specify the color of the selection
 ::-moz-selection {
-  color: $black;
-  background: $lightGray;
+  color: $c1;
+  background: $c4;
 }
 ::selection {
-  color: $black;
-  background: $lightGray;
+  color: $c1;
+  background: $c4;
 }
 
 // Nicolas Gallagher's micro clearfix hack
@@ -168,7 +179,7 @@ img {
 
 .masthead {
   padding: 20px 0;
-  border-bottom: 1px solid $lightGray;
+  border-bottom: 1px solid $c4;
 
   @include mobile {
     text-align: center;
@@ -202,49 +213,49 @@ img {
   }
 }
 
-.site-name {
-  margin: 0;
-  color: $darkGray;
-  cursor: pointer;
-  font-family: $helveticaNeue;
-  font-weight: 300;
-  font-size: 28px;
-  letter-spacing: 1px;
-}
+// .site-name {
+//   margin: 0;
+//   color: $darkGray;
+//   cursor: pointer;
+//   //font-family: $helveticaNeue;
+//   font-weight: 300;
+//   font-size: em(28px);
+//   letter-spacing: 1px;
+// }
 
-.site-description {
-  margin: -5px 0 0 0;
-  color: $gray;
-  font-size: 16px;
+// .site-description {
+//   margin: -5px 0 0 0;
+//   color: $gray;
+//   font-size: em(16px);
 
-  @include mobile {
-    margin: 3px 0;
-  }
-}
+//   @include mobile {
+//     margin: 3px 0;
+//   }
+// }
 
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
   font-family: $font-title;
-  font-size: 18px;
+  font-size: em(18px);
 
   @include mobile {
     float: none;
     margin-top: 9px;
     display: block;
-    font-size: 16px;
+    // font-size: em(16px);
   }
 
   a {
     margin-left: 20px;
-    color: $darkGray;
+    color: $c1;
     text-align: right;
     font-weight: 300;
     letter-spacing: 1px;
 
     @include mobile {
       margin: 0 10px;
-      color: $blue;
+      color: $c5;
     }
   }
 }
@@ -255,7 +266,7 @@ nav {
 
 .posts > .post {
   padding-bottom: 2em;
-  border-bottom: 1px solid $lightGray;
+  border-bottom: 1px solid $c4;
 }
 
 .posts > .post:last-child {
@@ -264,12 +275,21 @@ nav {
 }
 
 .post {
+
+  a {
+    border-bottom: 1px solid rgba($c5,0.88);
+  }
+
+  .postTitle a {
+    border-bottom: none;
+  }
+
   blockquote {
     margin: 1.8em .8em;
-    border-left: 2px solid $gray;
+    border-left: 2px solid $c1;
     padding: 0.1em 1em;
-    color: $gray;
-    font-size: 22px;
+    color: $c1;
+    font-size: em(21px);
     font-style: italic;
   }
 
@@ -279,15 +299,18 @@ nav {
 
   .read-more {
     text-transform: uppercase;
-    font-size: 15px;
-  }
+    font-size: em(15px);
+    font-family: $font-title;
+ }
 }
 
 .wrapper-footer {
+  margin: 0 auto;
+  max-width: 740px;
   margin-top: 50px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  background-color: $lightGray;
+  // border-top: 1px solid $c4;
+  // border-bottom: 1px solid #ddd;
+  // background-color: $c4;
 }
 
 footer {
