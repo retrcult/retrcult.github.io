@@ -44,12 +44,15 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-title;
+  font-weight: normal;
   color: $c1;
-  font-weight: bold;
-
   line-height: 1.7;
   margin: 1em 0 15px;
   padding: 0;
+
+  a {
+    color: inherit;
+  }
 
   @include mobile {
     line-height: 1.4;
@@ -58,10 +61,6 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: em(28px);
-
-  a {
-    color: inherit;
-  }
 }
 
 h2 {
@@ -137,6 +136,7 @@ img {
 }
 
 .tag {
+  color: $c1;
   border-bottom: 1px solid rgba($c5,0.92);
 }
 
