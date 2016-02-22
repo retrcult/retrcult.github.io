@@ -130,7 +130,6 @@ img {
 
 .date, .tags {
   font-family: $font-title;
-  color: $c3;
 }
 
 .date {
@@ -276,14 +275,6 @@ nav {
 
 .post {
 
-  a {
-    border-bottom: 1px solid rgba($c5,0.88);
-  }
-
-  .postTitle a {
-    border-bottom: none;
-  }
-
   blockquote {
     margin: 1.8em .8em;
     border-left: 2px solid $c1;
@@ -302,6 +293,13 @@ nav {
     font-size: em(15px);
     font-family: $font-title;
  }
+}
+
+.entry {
+
+  a {
+    border-bottom: 1px solid rgba($c5,0.92);
+  }
 }
 
 .wrapper-footer {
