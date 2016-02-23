@@ -8,7 +8,7 @@ permalink: /tags/
   .tag-posts {display: none;}
 </style>
 
-<!-- h3 class="pageTitle" id="tagTitle">Querying...</h3 -->
+<!-- h4 class="pageTitle" id="tagTitle">Querying...</h4 -->
 
 {% capture tags %}
     {% for tag in site.tags %}
@@ -22,7 +22,7 @@ permalink: /tags/
   {% for post in site.posts %}
     {% for otag in post.tags %}
       {% if tag == otag %}
-        <h3><a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a></h3>
+        <h4><a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a></h4>
       {% endif %}
     {% endfor %}
   {% endfor %}
