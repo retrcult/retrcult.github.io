@@ -19,11 +19,11 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $font-content;
+  font: 17.304px/1.4 $font-content;
   color: $c2;
 
   @include mobile {
-    font: 16px/1.4 $font-content;
+    font: 16px/1.6 $font-content;
   }
 }
 
@@ -50,12 +50,16 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1em 0 15px;
   padding: 0;
 
-  a {
-    color: inherit;
-  }
-
   @include mobile {
     line-height: 1.4;
+  }
+}
+
+
+h1, h2, h3 {
+
+  a {
+    color: inherit;
   }
 }
 
@@ -64,7 +68,7 @@ h1 {
 }
 
 h2 {
-  font-size: em(24px);
+  font-size: em(23px);
 }
 
 h3 {
@@ -75,9 +79,20 @@ h4 {
   font-size: em(18px);
   color: $c2;
 }
-
+h5 {
+  margin-bottom: 0px;
+  font-size: em(16px);
+  letter-spacing: 1px;
+  color: $c2;
+}
 p {
   margin: 15px 0;
+}
+
+hr {
+  //margin: 1em 0;
+  display: inline-block;
+  width: 62%;
 }
 
 a {
@@ -90,16 +105,17 @@ a {
 }
 
 ul, ol {
-  margin: em(15px) 0;
-  padding-left: em(30px);
+  margin: 15px 0;
+  padding-left: 30px;
 }
 
 ul {
-  list-style-type: disc;
+  list-style-type: circle;
 }
 
 ol {
-  list-style-type: decimal;
+  // list-style-type: decimal-leading-zero;
+  list-style-type: bengali;
 }
 
 ol ul, ul ol, ul ul, ol ol {
@@ -110,7 +126,11 @@ ul ul, ol ul {
   list-style-type: circle;
 }
 
-em, i {
+em {
+  border-bottom: 2px dotted $c1;
+}
+
+i {
   font-style: italic;
 }
 
@@ -251,7 +271,8 @@ nav {
     letter-spacing: 1px;
 
     @include mobile {
-      margin: 0 10px;
+     font-weight: 400;
+     margin: 0 10px;
       color: $c5;
     }
   }
@@ -262,6 +283,14 @@ nav {
 //
 
 .posts {
+
+  .entry {
+    line-height: inherit;
+  }
+
+  .excerpt {
+    display: block;
+  }
 
   > .post {
     padding-bottom: 2em;
@@ -291,16 +320,25 @@ nav {
 
   .read-more {
     text-transform: uppercase;
-    font-size: em(15px);
+    //font-size: em(15px);
     font-family: $font-title;
  }
 }
 
 .entry {
+  line-height: 1.571428em;
 
   a {
     border-bottom: 1px solid rgba($c5,0.92);
   }
+}
+
+.excerpt {
+  display: none;
+}
+
+.hide {
+  display: none;
 }
 
 #postTitle {
