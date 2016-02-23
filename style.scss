@@ -23,7 +23,7 @@ body {
   color: $c2;
 
   @include mobile {
-    font: 16px/1.6 $font-content;
+    font: 15px/1.6 $font-content;
   }
 }
 
