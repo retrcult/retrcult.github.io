@@ -345,6 +345,28 @@ nav {
   font-weight: 700;
 }
 
+.arch-posts {
+
+  time {
+    display: inline-block;
+    min-width: 72px;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      right: em(7px); top: 0;
+      content: '»';
+    }
+  }
+
+  @include mobile {
+
+    li a {
+      display: block;
+      border-bottom-color: transparent;
+    }
+  }
+}
 
 .wrapper-footer {
   margin: 0 auto;
