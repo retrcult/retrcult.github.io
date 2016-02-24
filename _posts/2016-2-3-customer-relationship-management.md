@@ -1,6 +1,6 @@
 ---
 layout: post
-title: CRM
+title: Customer Relationship Management
 tags: [CRM]
 ---
 
