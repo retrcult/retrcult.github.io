@@ -55,7 +55,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-
 h1, h2, h3 {
 
   a {
@@ -316,12 +315,18 @@ nav {
 .post {
 
   blockquote {
-    margin: 1.8em .8em;
+    font-family: $font-mono;
+    margin: 1em .8em;
     border-left: 2px solid $c1;
     padding: 0.1em 1em;
     color: $c1;
-    font-size: em(21px);
+    font-size: em(16.9px);
     font-style: italic;
+
+    @include mobile {
+      margin: 0.8em .6em;
+      //border-left-width: 1px;
+    }
   }
 
   .comments {
