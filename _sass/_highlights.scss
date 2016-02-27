@@ -1,18 +1,18 @@
 
 .highlight {
-  background-color: #f0e6ef;
+  background-color: #F9F2F8;
   padding: 7px 7px 7px 10px;
   border: 1px solid #ddd;
   margin: 20px 0 20px 0;
   overflow: scroll;
-  //line-height: 1.32;
 }
 
 code {
   font-family: "Anonymous Pro","Bitstream Vera Sans Mono",Consolas, monospace;
-  background-color: #f0e6ef;
+  background-color: $c3;
   color: #65334d;
   border-radius: 1px;
+  margin: 0 2px;
   padding: 0 2px;
 }
 
@@ -22,12 +22,13 @@ pre {
 
   code {
     background: transparent;
-    font-size: em(16px);
+    font-size: em(15.6px);
+    line-height: 1.41;
   }
 
 }
 
-.highlight .c { color: #586E75 } /* Comment */
+.highlight .c { color: #94a8af; } //#586E75 } /* Comment */
 .highlight .err { color: #93A1A1 } /* Error */
 .highlight .g { color: #93A1A1 } /* Generic */
 .highlight .k { color: #859900 } /* Keyword */
@@ -36,9 +37,9 @@ pre {
 .highlight .o { color: #859900 } /* Operator */
 .highlight .x { color: #CB4B16 } /* Other */
 .highlight .p { color: #93A1A1 } /* Punctuation */
-.highlight .cm { color: #586E75 } /* Comment.Multiline */
+.highlight .cm { color: #94a8af; } //#586E75 } /* Comment.Multiline */
 .highlight .cp { color: #859900 } /* Comment.Preproc */
-.highlight .c1 { color: #586E75 } /* Comment.Single */
+.highlight .c1 { color: #94a8af; } //#586E75 } /* Comment.Single */
 .highlight .cs { color: #859900 } /* Comment.Special */
 .highlight .gd { color: #2AA198 } /* Generic.Deleted */
 .highlight .ge { color: #93A1A1; font-style: italic } /* Generic.Emph */

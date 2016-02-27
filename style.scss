@@ -75,7 +75,7 @@ h3 {
 }
 
 h4, h5 {
-  font-size: em(18px);
+  font-size: em(16.9px);
   color: $c2;
 }
 
@@ -100,9 +100,11 @@ p {
 }
 
 hr {
-  //margin: 1em 0;
-  display: inline-block;
-  width: 62%;
+  margin: 30px 0;
+  border: 0;
+  height: 1px;
+  background: rgba($c1,0.6);
+  //background-image: linear-gradient(to right, #ffffff, $c5 10%, $c5 90%, #ffffff);
 }
 
 a {
@@ -186,15 +188,17 @@ img {
 
 // Nicolas Gallagher's micro clearfix hack
 // http://nicolasgallagher.com/micro-clearfix-hack/
-.clearfix:before,
-.clearfix:after {
+.clearfix {
+  *zoom: 1;
+  &:before, &:after {
     content: " ";
     display: table;
+  }
+  &:after {
+    clear: both;
+  }
 }
 
-.clearfix:after {
-    clear: both;
-}
 
 /*********************/
 /* LAYOUT / SECTIONS */
@@ -401,6 +405,62 @@ footer {
   padding: 20px 0;
   text-align: center;
 }
+
+
+// added style
+//
+//
+figcaption {
+  font-size: em(15px);
+  line-height: 1.2;
+}
+
+
+
+
+// something
+//
+//
+.display-code {
+
+  style[contenteditable],
+  script[contenteditable] {
+
+    position: relative;
+    display: block;
+    outline: none;
+    background-color: $white;
+    font-size: em(15px);
+    line-height: 1.41;
+    border: 1px solid $c4;
+    padding: 0 1em;
+    margin: 1em 0 15px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    transition: background-color 0.3s ease-out;
+
+    &:after {
+      position: absolute;
+      content: "contenteditable";
+      top: -1em; right: 0;
+      padding: 2px 5px;
+      background-color: $white;
+    }
+
+    &:focus {
+      background-color: #f3f3f3;
+
+      &:after {
+        content: none;
+      }
+    }
+  }
+
+}
+
+//
+//
+//
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
