@@ -130,7 +130,8 @@ ul {
 }
 
 ol {
-  // list-style-type: decimal-leading-zero;
+  //list-style-type: decimal;
+  //list-style-type: decimal-leading-zero;
   list-style-type: bengali;
 }
 
@@ -410,13 +411,60 @@ footer {
 // added style
 //
 //
+sup {
+  position: relative;
+  font-size: 0.798em;
+  top: -0.51824em;
+  padding: 0 1px;
+  line-height: 1;
+
+  a[rel="footnote"] {
+    border-bottom: none;
+  }
+}
+
+mark {
+  background: #ffffb1;
+  border-bottom: 1px solid #dfdfdf;
+  border-right: 1px solid #dfdfdf;
+  color: #333;
+  padding: 0 4px;
+  margin: 0 2px;
+}
+
 figcaption {
-  font-size: em(15px);
+  font-size: em(15.51px);
   line-height: 1.2;
 }
 
+table {
+  font-size: em(15.51px);
+  line-height: 1.414;
+}
+tr {
+  background-color: $white;
+  border-top: 1px solid $c4;
+
+  &:nth-child(2n) {
+    background-color: rgba(0,0,0,0.04);
+  }
+}
+th, td {
+  padding: em(6px) em(13px);
+  border: 1px solid $c4;
+}
 
 
+.footnotes {
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  a[rev="footnote"] {
+    border-bottom: none;
+  }
+}
 
 // something
 //

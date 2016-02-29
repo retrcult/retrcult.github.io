@@ -80,6 +80,11 @@ sass:
 gems:
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
 
+# https://github.com/vmg/redcarpet
+# https://george-hawkins.github.io/basic-gfm-jekyll/redcarpet-extensions.html
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "strikethrough", "highlight", "superscript", "footnotes", "with_toc_data"]
+
 # Exclude these files from your production _site
 exclude:
     - Gemfile

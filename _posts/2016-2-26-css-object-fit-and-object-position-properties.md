@@ -4,17 +4,45 @@ title: CSS Object-fit & Object-position
 tags: [CSS]
 ---
 
-`object-fit`和`object-position`使开发人员可以操作img或video中的内容，类似于我们可以用`background-position`和`background-size`操作背景内容一样。
+在响应式设计(RWD)中，我们往往采取给图片的容器设置一个尺寸，然后给图片设置下面的代码，以获得图片的自适应处理。
 
 {% highlight css %}
+img {
+    max-width: 100%;
+    height: auto;
+}
 {% endhighlight %}
+
+但往往需要处理的只止于此。你可能想要让图像长宽比例来填充他的整个容器，和想重新定位他的中心位置。或者，如果你想按长宽比例响应式调整iframe，你可能会真正的碰到麻烦。当然也有[修复](http://embedresponsively.com/)的方法，如今`object-fit`和`object-position`使开发人员可以操作\<img\>或\<video\>中的内容，类似于我们可以用`background-position`和`background-size`操作背景内容一样。
 
 <!--more-->
 
 object-fit
 -------
 
-该属性定义一个元素，如img，如何适应容器的宽度和高度。我们可以用`object-fit`告诉内容以各种方式填充容器，如“保存该长宽比！” 或“向上伸展，尽可能多的占用空间！”
+{% highlight css %}
+object-fit: fill | contain | cover | none | scale-down
+{% endhighlight %}
+
+该属性定义一个元素如何适应容器的宽度和高度。我们可以用`object-fit`告诉内容以各种方式填充容器，如“保存该长宽比！” 或“向上伸展，尽可能多的占用空间！”
+
+object-fit主要适合于替换元素，比如：\<video\>、\<object\>、\<img\>、\<input type="image"\>、\<svg\>、\<svg:image\>和\<svg:video\>等。其*默认值为fill*。object-fit取值的说明如下：
+
+* `fill`:
+  default, which tells the image to fill the entire content box and ignore its own aspect-ratio. The object's concrete object size is the element's used width and height.
+* `contain`:
+  tells the image to shrink or enlarge itself until it fits in the box while maintaining its aspect-ratio.
+* `cover`:
+  tells the image to shrink or enlarge itself until it fills up the box completely while maintaining its aspect-ratio. This usually results in only part of the image being shown.
+* `none`:
+  tells the image to ignore the box and retain its own size. This may result in the image not filling up the box or sticking out of it.
+* `scale-down`:
+  tells the image to compare the results of none and contain and choose the one that results in the smallest image. In this test page that would be contain.
+
+
+
+
+
 
 ![example image]({{ site.baseurl }}/images/2016/02/picjumbo_HNCK8936.jpg)
 
@@ -35,7 +63,7 @@ object-fit
   <p><img src="/images/2016/02/picjumbo_HNCK8936.jpg"></p>
 </div>
 
-当我们改变了img的高度和宽度时，img的内容将占用我们所创建容器的所有可用空间，从而破坏了图片原本的长宽比。
+当我们改变了\<img\>的高度和宽度时，\<img\>的内容将占用我们所创建容器的所有可用空间，从而破坏了图片原本的长宽比。
 
 为了保持图像的长宽比，同时也可以填充空间，我们可以使用`object-fit`（取消👆注释）。
 
