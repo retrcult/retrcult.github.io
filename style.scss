@@ -420,6 +420,14 @@ sup {
 
   a[rel="footnote"] {
     border-bottom: none;
+    position: relative;
+
+    &:before {
+      content: "[";
+    }
+    &:after {
+      content: "]";
+    }
   }
 }
 
