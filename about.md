@@ -12,4 +12,4 @@ Nothing ...
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[weibo](http://weibo.com/3541910035/)
