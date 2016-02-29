@@ -438,22 +438,33 @@ figcaption {
 }
 
 table {
-  font-size: em(15.51px);
-  line-height: 1.42857;
+
 }
 tr {
   background-color: $white;
   border-top: 1px solid $c4;
-
-  &:nth-child(2n) {
-    background-color: rgba(0,0,0,0.04);
-  }
 }
 th, td {
   padding: em(6px) em(13px);
   border: 1px solid $c4;
 }
+td {
+  font-size: em(15.51px);
+  line-height: 1.42857;
+  vertical-align: middle;
+}
+tbody {
+  tr {
+    transition: background-color 0.3s ease-out;
 
+    &:nth-child(2n+1) {
+      background-color: rgba(0,0,0,0.03);
+    }
+    &:hover {
+      background-color: rgba($c3,0.44);
+    }
+  }
+}
 
 .footnotes {
 

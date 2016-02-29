@@ -1,7 +1,7 @@
 
 .highlight {
   background-color: #F9F2F8;
-  padding: 7px 7px 7px 10px;
+  padding: em(14px) em(7px) em(14px) em(10px);
   border: 1px solid #ddd;
   margin: 20px 0 20px 0;
   overflow: scroll;
@@ -24,6 +24,7 @@ pre {
 
   code {
     background: transparent;
+    margin: 0; padding: 0;
   }
 
 }
