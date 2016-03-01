@@ -18,9 +18,9 @@ layout: default
     {% else %}
       {% assign tags = page.tags %}
     {% endif %}
-    <span>Tags: </span>
+    <!-- <span>Tags: </span> -->
     {% for tag in tags %}
-      <a class="tag" href="/tags?tag={{tag}}">{{tag}}</a>
+      <a class="tag" href="/tags?tag={{tag}}">#{{tag}}</a>
       {% unless forloop.last %},{% endunless %}
     {% endfor %}
   </div>
