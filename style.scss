@@ -465,10 +465,13 @@ tr {
   border-top: 1px solid $c4;
 }
 th, td {
-  padding: em(6px) em(13px);
   border: 1px solid $c4;
 }
+th {
+  padding: em(6,15.51) em(13,15.51);
+}
 td {
+  padding: em(8.5,15.51) em(13,15.51);
   line-height: 1.42857;
   vertical-align: middle;
 }

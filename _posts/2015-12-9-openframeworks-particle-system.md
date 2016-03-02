@@ -1,7 +1,7 @@
 ---
 layout: post
 title: La Fleur
-tags: [MyWork, openFrameworks]
+tags: [MyWork, openFrameworks, CreativeCoding]
 ---
 
 ![1]({{ site.baseurl }}/images/2015/2.1.jpg)
