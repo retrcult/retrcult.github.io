@@ -326,10 +326,10 @@ nav {
     padding-bottom: 2em;
     border-bottom: 1px solid $c4;
 
-    &:last-child {
-      padding-bottom: 1em;
-      border-bottom: none;
-    }
+    // &:last-child {
+    //   padding-bottom: 1em;
+    //   border-bottom: none;
+    // }
   }
 }
 
@@ -356,7 +356,8 @@ nav {
 
   .read-more {
     text-transform: uppercase;
-    //font-size: em(15px);
+    display: inline-block;
+    margin-top: em(5.2);
     font-family: $font-title;
  }
 }
@@ -466,6 +467,7 @@ tr {
 }
 th, td {
   border: 1px solid $c4;
+  vertical-align: middle;
 }
 th {
   padding: em(6,15.51) em(13,15.51);
@@ -473,7 +475,6 @@ th {
 td {
   padding: em(8.5,15.51) em(13,15.51);
   line-height: 1.42857;
-  vertical-align: middle;
 }
 tbody {
   tr {
@@ -496,6 +497,24 @@ tbody {
 
   a[rev="footnote"] {
     border-bottom: none;
+  }
+}
+
+.pagination {
+  font-family: $font-title;
+  padding: 1em 0;
+
+  .previous, .next {
+    width: 50%;
+    text-align: center;
+    font-size: em(18px);
+    padding: em(17.304,18);
+  }
+  .previous {
+    float: left;
+  }
+  .next {
+    float: right;
   }
 }
 

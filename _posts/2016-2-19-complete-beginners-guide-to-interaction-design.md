@@ -82,6 +82,20 @@ Alan Cooper, Bill Scott, Brad Frost, Brenda Laurel, Brenda Sanderson, Dan Saffer
 
 ##### 5. [Axure](http://www.axure.com/)
 
+##### 6. [Flinto](https://www.flinto.com/)
+
+##### 7. [FileSquare](http://filesq.com/)
+
+##### 8. [Concept.ly](http://concept.ly/)
+
+##### 9. [Fluid UI](https://www.fluidui.com/)
+
+##### 10. [Brief](http://giveabrief.com/)
+
+##### 11. [Balsamiq](http://balsamiq.com/)
+
+[交互设计师必藏：50个线框图套件和在线设计工具 | 优设](http://www.uisdc.com/interaction-kits)
+
 
 
 六、 协会和组织

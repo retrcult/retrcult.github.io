@@ -59,9 +59,11 @@ markdown: redcarpet
 highlighter: pygments
 permalink: /:title/
 
+paginate: 7
+paginate_path: '/blog/page:num/'
+
 excerpt_separator: <!--more-->
 
-# paginate: 5
 
 pages_list:
   About: '/about'
@@ -79,6 +81,7 @@ sass:
 # Use the following plug-ins
 gems:
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
+  - jekyll-paginate
 
 # https://github.com/vmg/redcarpet
 # https://george-hawkins.github.io/basic-gfm-jekyll/redcarpet-extensions.html

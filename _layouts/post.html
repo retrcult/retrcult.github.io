@@ -27,3 +27,16 @@ layout: default
 
   {% include disqus.html %}
 </article>
+
+<section class="pagination clearfix">
+  {% if page.previous %}
+    <a class="previous" href="{{ page.previous.url }}">Prev Post</a>
+  {% else %}
+    <span class="previous">Prev Post</span>
+  {% endif %}
+  {% if page.next %}
+    <a class="next" href="{{ page.next.url }}">Next Post</a>
+  {% else %}
+    <span class="next ">Next Post</span>
+  {% endif %}
+</section>
