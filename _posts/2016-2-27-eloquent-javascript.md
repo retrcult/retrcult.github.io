@@ -728,6 +728,13 @@ The Secret Life of Objects
 
 There is a method similar to apply, called call.
 
+{% highlight js %}
+var fatRabbit = {type: "fat", speak: speak};
+speak.apply(fatRabbit, ["Burp!"]);
+// The fat rabbit says 'Burp!'
+speak.call({type: "old"}, "Oh my.");
+// The old rabbit says 'Oh my.'
+{% endhighlight %}
 
 
 

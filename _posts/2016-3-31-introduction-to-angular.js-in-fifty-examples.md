@@ -68,7 +68,6 @@ appOne.factory('getCountries', function($http) {
       });
     }
   };
-
   // return {
   //   list: function(callback) {
   //     $http.get('assets/files/country.json').success(callback);
