@@ -26,6 +26,7 @@ soup = BeautifulSoup("<html>data</html>")
 soup = BeautifulSoup(html_doc， "lxml")
 {% endhighlight %}
 
+<!--more-->
 
 ## 对象的种类
 
@@ -64,7 +65,7 @@ tag
 
 #### Attributes
 
-一个 tag 可能有很多个属性。 tag `<b class="boldest">` 有一个 _class_ 的属性，值为 _boldest_。
+一个 tag 可能有很多个属性。 tag `<b class="boldest">` 有一个 class 的属性，值为 boldest。
 
 {% highlight python %}
 tag['class']
@@ -142,7 +143,7 @@ xml_soup.p['class']
 
 ### 可以遍历的字符串
 
-字符串常被包含在 tag 内。Beautiful Soup 用 `NavigableString` 类来***包装 tag 中的字符串***。
+字符串常被包含在 tag 内。Beautiful Soup 用 `NavigableString` 类来*包装 tag 中的字符串*。
 一个 `NavigableString` 字符串与 Python 中的 Unicode 字符串相同，并且还支持包含在 **遍历文档树** 和 **搜索文档树** 中的一些特性。 通过 `unicode()` 方法可以直接将 `NavigableString` 对象转换成 Unicode 字符串：
 
 {% highlight python %}
@@ -167,9 +168,9 @@ tag
 
 ### BeautifulSoup
 
-`BeautifulSoup` 对象表示的是一个文档的全部内容。大部分时候，可以把它当作 Tag 对象，它支持 *遍历文档树* 和 *搜索文档树* 中描述的大部分的方法。
+`BeautifulSoup` 对象表示的是一个文档的全部内容。大部分时候，可以把它当作 Tag 对象，它支持 **遍历文档树** 和 **搜索文档树** 中描述的大部分的方法。
 
-因为 `BeautifulSoup` 对象并不是真正的 HTML 或 XML 的 tag，所以它没有 name 和 attribute 属性。但有时查看它的 `.name` 属性是很方便的，所以 `BeautifulSoup` 对象包含了一个值为 “[document]” 的特殊属性 `.name`
+因为 `BeautifulSoup` 对象并不是真正的 HTML 或 XML 的 tag，所以它没有 name 和 attribute 属性。但有时查看它的 `.name` 属性是很方便的，所以 `BeautifulSoup` 对象包含了一个值为 “**[document]**” 的特殊属性 `.name`
 
 {% highlight python %}
 soup.name
@@ -178,7 +179,7 @@ soup.name
 
 ### 注释及特殊字符串
 
-Comment 对象是一个特殊类型的 NavigableString 对象：
+`Comment` 对象是一个特殊类型的 `NavigableString` 对象：
 
 {% highlight python %}
 markup = "<b><!--Hey， buddy. Want to buy a used parser?--></b>"
@@ -190,7 +191,7 @@ comment
 # u'Hey， buddy. Want to buy a used parser'
 {% endhighlight %}
 
-Beautiful Soup 中定义的其它类型都可能会出现在 XML 的文档中：`CData`，`ProcessingInstruction`，`Declaration`，`Doctype`.与 `Comment` 对象类似，这些类都是 `NavigableString` 的子类，只是添加了一些额外的方法的字符串独享。下面是用CDATA来替代注释的例子：
+Beautiful Soup 中定义的其它类型都可能会出现在 XML 的文档中：`CData`，`ProcessingInstruction`，`Declaration`，`Doctype`。与 `Comment` 对象类似，这些类都是 `NavigableString` 的子类，只是添加了一些额外的方法的字符串独享。下面是用 `CDATA` 来替代注释的例子：
 
 {% highlight python %}
 from bs4 import CData
