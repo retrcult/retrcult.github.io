@@ -64,7 +64,7 @@ tag
 
 #### Attributes
 
-一个 tag 可能有很多个属性。 tag `<b class="boldest">` 有一个 __class__ 的属性，值为 __boldest__。
+一个 tag 可能有很多个属性。 tag `<b class="boldest">` 有一个 _class_ 的属性，值为 _boldest_。
 
 {% highlight python %}
 tag['class']
@@ -78,7 +78,7 @@ tag.attrs
 # {u'class': u'boldest'}
 {% endhighlight %}
 
-tag 的属性可以被添加，删除或修改。tag 的属性操作方法与字典一样
+tag 的属性可以被添加，删除或修改。tag 的属性操作方法与字典一样：
 
 {% highlight python %}
 tag['class'] = 'verybold'
@@ -100,7 +100,7 @@ print(tag.get('class'))
 ##### 多值属性
 
 在 Beautiful Soup 中多值属性的返回类型是 list。
-最常见的多值的属性是 `class` (一个 tag 可以有多个 CSS 的 class)。还有一些属性 `rel`，`rev`，`accept-charset`，`headers`，`accesskey`。
+最常见的多值的属性是 `class`（一个 tag 可以有多个 CSS 的 class）。还有一些属性 `rel`，`rev`，`accept-charset`，`headers`，`accesskey`。
 
 {% highlight python %}
 css_soup = BeautifulSoup('<p class="body strikeout"></p>')
@@ -112,7 +112,7 @@ css_soup.p['class']
 # ["body"]
 {% endhighlight %}
 
-如果某个属性看起来好像有多个值，但在任何版本的 HTML 定义中都没有被定义为多值属性，那么 Beautiful Soup 会将这个属性作为字符串返回
+如果某个属性看起来好像有多个值，但在任何版本的 HTML 定义中都没有被定义为多值属性，那么 Beautiful Soup 会将这个属性作为字符串返回：
 
 {% highlight python %}
 id_soup = BeautifulSoup('<p id="my id"></p>')
@@ -120,7 +120,7 @@ id_soup.p['id']
 # 'my id'
 {% endhighlight %}
 
-将 tag 转换成字符串时，多值属性会合并为一个值
+将 tag 转换成字符串时，多值属性会合并为一个值：
 
 {% highlight python %}
 rel_soup = BeautifulSoup('<p>Back to the <a rel="index">homepage</a></p>')
@@ -131,7 +131,7 @@ print(rel_soup.p)
 # <p>Back to the <a rel="index contents">homepage</a></p>
 {% endhighlight %}
 
-如果转换的文档是 XML 格式，那么 tag 中不包含多值属性
+如果转换的文档是 XML 格式，那么 tag 中不包含多值属性：
 
 {% highlight python %}
 xml_soup = BeautifulSoup('<p class="body strikeout"></p>'， 'xml')
@@ -142,7 +142,7 @@ xml_soup.p['class']
 
 ### 可以遍历的字符串
 
-字符串常被包含在 tag 内。Beautiful Soup 用 `NavigableString` 类来__包装 tag 中的字符串__。
+字符串常被包含在 tag 内。Beautiful Soup 用 `NavigableString` 类来***包装 tag 中的字符串***。
 一个 `NavigableString` 字符串与 Python 中的 Unicode 字符串相同，并且还支持包含在 **遍历文档树** 和 **搜索文档树** 中的一些特性。 通过 `unicode()` 方法可以直接将 `NavigableString` 对象转换成 Unicode 字符串：
 
 {% highlight python %}
