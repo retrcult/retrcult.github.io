@@ -186,7 +186,7 @@ $ \eqref{3.1.7-2} $ 写作 `$$ \left\lbrace \sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+
 
 请尽量使用公式语法： `\sin`，`\cos`，`\arcsin`，`\arccos`，`\tan`，`\cot`，`\arctan`。
 
-$$ \sin\theta+\sin\varphi= 2\sin[(\theta+\varphi)/2]cos[(\theta-\varphi)/2]  $$
+$$ \sin\theta+\sin\varphi= 2\sin[(\theta+\varphi)/2]\cos[(\theta-\varphi)/2]  $$
 
 对比直接用 HTML 输出的结果，sinθ+sinφ = 2 sin[(θ+φ)/2] cos[(θ-φ)/2]。
 
