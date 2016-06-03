@@ -17,6 +17,6 @@ tags: [MyWork, UI]
 ![4]({{ site.baseurl }}/images/2015/1.4.png)
 ~ much smaller
 
-![5]({{ site.baseurl }}/images/2015/1.5.png)
+<img src="/images/2015/1.5.png" alt="" style="display:block;max-width:450px;">
 ~ mobile view
 
