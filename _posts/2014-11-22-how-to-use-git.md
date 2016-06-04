@@ -34,12 +34,28 @@ $ git config --global user.email
 {% endhighlight %}
 
 {% highlight bash %}
+git config --global credential.helper cache
+# Set git to use the credential memory cache
+git config --global credential.helper 'cache --timeout=3600'
+# Set the cache to timeout after 1 hour (setting is in seconds)
+{% endhighlight %}
+
+{% highlight bash %}
 $ git config color.ui true
 # Use colorful git output
 
 $ git config format.pretty oneline
 # Show log on just one line per commit
 {% endhighlight %}
+
+The complete configuration is visible using `git config -l`, and the `git-config` man page explains the meaning of each option.
+
+{% highlight bash %}
+$ man git-config
+# or
+$ git help config
+{% endhighlight %}
+
 
 
 ### Troubleshooting
@@ -121,7 +137,7 @@ $ git commit
 # By submitting a commit message for your changes, you can permanently store the contents of the index in the repository
 
 # Alternatively, instead of running `git add` beforehand, you can use
-$ git commit -am "Hotfix"
+$ git commit -am "init"
 # which will automatically notice any modified (but not new) files, add them to the index, and commit a message says "Hotfix", all in one step
 
 # To see what is about to be committed, using
@@ -141,6 +157,41 @@ $ git status
   Untracked files:
     (use "git add <file>..." to include in what will be committed)
       newFileThatIsNotYetInGit
+{% endhighlight %}
+
+
+
+### Pushing Changes
+
+Your changes are now in the **HEAD** of your local working copy.
+If you have not cloned an existing repository and want to connect your repository to a remote server, you need to add it with
+
+{% highlight bash %}
+$ git remote add origin https://github.com/my/repo.git
+{% endhighlight %}
+
+To send those changes to your remote repository, execute
+
+{% highlight bash %}
+$ git push origin master
+{% endhighlight %}
+
+
+
+### Replacing Local Changes
+
+In case you did something wrong, you can replace local changes using the command
+
+{% highlight bash %}
+$ git checkout -- <filename>
+# Replace the changes in your working tree with the last content in HEAD. Changes already added to the index, as well as new files, will be kept.
+{% endhighlight %}
+
+If you instead want to drop all your local changes and commits, fetch the latest history from the server and point your local master branch at it like this
+
+{% highlight bash %}
+git fetch origin
+git reset --hard origin/master
 {% endhighlight %}
 
 
@@ -176,11 +227,18 @@ $ git checkout experimental
 
 # (edit file)
 $ git commit -a
+
+# A branch is not available to others unless you push the branch to your remote repository
+$ git push origin experimental
+
 $ git checkout master
 # (edit file)
 $ git commit -a
 
 # At this point the two branches have diverged, with different changes made in each
+# You can preview them by using
+$ git diff experimental master
+
 # To merge the changes made in experimental into master, run
 $ git merge experimental
 
@@ -201,10 +259,18 @@ $ git commit -a
 $ git branch -d experimental
 # This command ensures that the changes in the experimental branch are already in the current branch
 
-# If you develop on a branch crazy-idea, then regret it, you can always delete the branch with
-$ git branch -D crazy-idea
+# You can also create a new branch and switch to it using
+$ git checkout -b crazy-idea
 
+# If you regret it, you can always delete the branch with
+$ git branch -D crazy-idea
 {% endhighlight %}
+
+
+As a general rule, you should try to split your changes into small logical steps, and commit each of them. They should be consistent, working independently of any later commits, pass the test suite, etc. This makes the review process much easier, and the history much more useful for later inspection and analysis, for example with `git-blame` and `git-bisect`.
+
+Don’t be afraid of making too small or imperfect steps along the way. You can always go back later and edit the commits with `git rebase --interactive` before you publish them. You can use `git stash save --keep-index` to run the test suite independent of other uncommitted changes.
+
 
 
 
@@ -212,40 +278,472 @@ $ git branch -D crazy-idea
 Using Git for Collaboration
 -----------
 
+Suppose that you’ve started a new project with a Git repository in <i>/home/me/project</i>, and that someone, who has a home directory on the same machine, wants to contribute.
+
+{% highlight bash %}
+someone$ git clone /home/me/project projectForked
+# Create a new directory "projectFork" containing a clone of your repository.
+{% endhighlight %}
+
+Then, someone makes some changes and commits them:
+
+{% highlight bash %}
+# (someone edit files)
+someone$ git commit -a
+{% endhighlight %}
+
+When he’s ready, he tells you to pull changes from the repository at <i>/home/someone/projectForked</i>. You can do this with:
+
+{% highlight bash %}
+$ git pull /home/someone/projectForked master
+# The "pull" command performs two operations: it fetches changes from a remote branch, then merges them into the current branch.
+# This merges the changes from someone’s "master" branch into your current branch. If you’ve made your own changes in the meantime, then you may need to manually fix any conflicts.
+{% endhighlight %}
+
+Note that in general, you would want your local changes committed before initiating this "pull". If someone’s work conflicts with what you did since your histories forked, you will use your working tree and the index to resolve conflicts, and existing local changes will interfere with the conflict resolution process (Git will still perform the fetch but will refuse to merge --- You will have to get rid of your local changes in some way and pull again when this happens).
+
+You can peek at what someone did without merging first
+
+{% highlight bash %}
+$ git fetch /home/someone/projectForked master
+$ git log -p HEAD..FETCH_HEAD
+# Using the "fetch" command allows you to inspect what someone did, using a special symbol "FETCH_HEAD", in order to determine if he has anything worth pulling.
+{% endhighlight %}
+
+This operation is safe even if you have uncommitted local changes. The range notation "HEAD..FETCH_HEAD" means "*show everything that is reachable from the FETCH_HEAD but exclude anything that is reachable from HEAD*". You already knows everything that leads to your current state (HEAD), and reviews what someone has in his state (FETCH_HEAD) that you have not seen with this command.
+
+You can visualize what someone did by issuing the following command:
+
+{% highlight bash %}
+$ gitk HEAD..FETCH_HEAD
+# This uses the same two-dot range notation we saw earlier with git log.
+
+# You may want to view what both of you did since you forked.
+$ gitk HEAD...FETCH_HEAD
+# Three-dot form means "show everything that is reachable from either one, but exclude anything that is reachable from both of them".
+{% endhighlight %}
+
+When you are working in a small closely knit group, it is not unusual to interact with the same repository over and over again. By defining remote repository shorthand, you can make it easier:
+
+{% highlight bash %}
+$ git remote add theOther /home/someone/projectForked
+$ git fetch theOther
+
+# Fetching using a remote repository shorthand set up with git remote, what was fetched is stored in a remote-tracking branch, in this case theOther/master. So after this:
+$ git log -p master..theOther/master
+# Show a list of all the changes that someone made since he branched from your master branch.
+
+$ git merge theOther/master
+# Merge the changes into your master branch
+# This merge can also be done by pulling from your own remote-tracking branch, like this:
+$ git pull . remotes/theOther/master
+{% endhighlight %}
+
+Note that git pull always merges into the current branch, regardless of what else is given on the command line.
+
+Later, someone can update his repo with your latest changes using
+
+{% highlight bash %}
+someone$ git pull
+{% endhighlight %}
+
+Note that he doesn’t need to give the path to your repository; when someone cloned your repository, Git stored the location of your repository in the repository configuration, and that location is used for pulls:
+
+{% highlight bash %}
+someone$ git config --get remote.origin.url
+/home/me/project
+{% endhighlight %}
+
+Git also keeps a pristine copy of your master branch under the name "origin/master":
+
+{% highlight bash %}
+someone$ git branch -r
+  origin/HEAD -> origin/master
+  origin/master
+someone$ git branch
+  * master
+{% endhighlight %}
+
+> Rule: Topic branches
+> Make a side branch for every topic (feature, bugfix, …​). Fork it off at the oldest integration branch that you will eventually want to merge it into.
 
 
 
 
-
-
-
-
-
-
-Git Workflow 2
+Merging Upwards
 -----------
 
-git log --graph
+There are two main tools that can be used to include changes from one branch on another: `git-merge` and `git-cherry-pick`.
+
+Merges have many advantages, so we try to solve as many problems as possible with merges alone. Cherry-picking is still occasionally useful.
+
+Most importantly, merging works at the branch level, while cherry-picking works at the commit level. This means that a merge can carry over the changes from 1, 10, or 1000 commits with equal ease, which in turn means the workflow scales much better to a large number of contributors (and contributions). Merges are also easier to understand because a merge commit is a "promise" that all changes from all its parents are now included.
+
+As a given feature goes from experimental to stable, it also "graduates" between the corresponding branches of the software. <i>git.git</i> uses the following integration branches:
+
+* **maint** tracks the commits that should go into the next "maintenance release", i.e., update of the last released stable version;
+
+* **master** tracks the commits that should go into the next release;
+
+* **next** is intended as a testing branch for topics being tested for stability for master.
+
+* There is a fourth official branch that is used slightly differently:
+
+    **pu** (proposed updates) is an integration branch for things that are not quite ready for inclusion yet.
+
+Each of the four branches is usually a direct descendant of the one above it.
+
+Conceptually, the feature enters at an unstable branch (usually next or pu), and "graduates" to master for the next release once it is considered stable enough.
+
+The "downwards graduation" discussed above cannot be done by actually merging downwards, however, since that would merge all changes on the unstable branch into the stable one. Hence the following:
+
+> Rule: Merge upwards
+
+> Always commit your fixes to the oldest supported branch that require them. Then (periodically) merge the integration branches upwards into each other.
+
+This gives a very controlled flow of fixes. If you notice that you have applied a fix to e.g. <i>master</i> that is also required in <i>maint</i>, you will need to `git-cherry-pick` it downwards. This will happen a few times and is nothing to worry about unless you do it very frequently.
+
+
+### Merge Workflow
+
+The merge workflow works by copying branches between upstream and downstream. Upstream can merge contributions into the official history; downstream base their work on the official history.
+
+There are three main tools that can be used for this:
+
+1 `git push <remote> <branch>` copies your branches to a remote repository
+
+2 `git fetch <remote>` copies remote branches to your repository, staying up to date
+
+3 `git pull <url> <branch>` merges remote topics (Do the fetch and merge in one)
+
+Note the last point. Do not use `git pull` unless you actually want to merge the remote branch.
+
+
+### Patch Workflow
+
+1 `git format-patch -M upstream..topic` to turn them into preformatted patch files
+
+2 `git send-email --to=<recipient> <patches>`
+
+
+Exploring history
+-----------
+
+{% highlight bash %}
+$ git log
+  commit c3420f6449a990249575d2a3d028a4772060c357
+  Author: retrcult <an@example.com>
+  Date:   Fri Jun 3 23:41:57 2016 +0800
+    new post added
+  commit 325a96d3bc0a324df60b3f02a5969c3d64090262
+  Author: retrcult <retrcult@github.com>
+  Date:   Fri Jun 3 19:16:25 2016 +0800
+    change default style
+
+$ git show 325a96d3bc0a
+# Use any initial part of the name that is long enough to uniquely identify the commit to see the details about it
+
+$ git show HEAD
+# the tip of the current branch
+
+git show experimental
+# the tip of the "experimental" branch
+{% endhighlight %}
+
+Every commit usually has one "parent" commit which points to the previous state of the project:
+
+{% highlight bash %}
+$ git show HEAD^
+# To see the parent of HEAD
+$ git show HEAD^1
+# Ssame as HEAD^
+$ git show HEAD^^
+# To see the grandparent of HEAD
+$ git show HEAD~4
+# To see the great-great grandparent of HEAD
+
+# You can also give commits names of your own
+$ git tag v2.5 1b2e1d63ff
+# Then you can refer to 1b2e1d63ff by the name "v2.5"
+{% endhighlight %}
+
+If you intend to share this name with other people (for example, to identify a release version), you should create a "tag" object, and perhaps sign it; see [git-tag](https://git-scm.com/docs/git-tag) for details.
+
+Any Git command that needs to know a commit can take any of these names. For example:
+
+{% highlight bash %}
+$ git diff v2.5 HEAD
+# Compare the current HEAD to v2.5
+$ git branch stable v2.5
+# Start a new branch named "stable" based at v2.5
+$ git reset --hard HEAD^
+# Reset your current branch and working directory to its state at HEAD^
+{% endhighlight %}
+
+> Be careful with that last command: in addition to losing any changes in the working directory, it will also remove all later commits from this branch. If this branch is the only branch containing those commits, they will be lost. Also, don’t use `git reset` on a publicly-visible branch that other developers pull from, as it will force needless merges on other developers to clean up the history. If you need to undo changes that you have pushed, use `git revert` instead.
+
+The `git grep` command can search for strings in any version of your project, so
+
+{% highlight bash %}
+$ git grep "hello" v2.5
+# Search for all occurrences of "hello" in v2.5
+{% endhighlight %}
+
+If you leave out the commit name, git grep will search any of the files it manages in your current directory. So
+
+{% highlight bash %}
+$ git grep "hello"
+# A quick way to search just the files that are tracked by Git
+{% endhighlight %}
+
+Many Git commands also take sets of commits, which can be specified in a number of ways. Here are some examples with git log:
+
+{% highlight bash %}
+$ git log --name-status
+# See only which files have changed
+$ git log stable..master
+# List commits made in the master branch but not in the stable branch
+$ git log v2.5..v2.6
+# Commits between v2.5 and v2.6
+$ git log v2.5..
+# Commits since v2.5
+$ git log v2.5.. Makefile
+# Commits since v2.5 which modify Makefile
+$ git log --author=someone
+# To see only the commits by someone
+$ git log --since="2 weeks ago"
+# Commits from the last 2 weeks
+$ git log --pretty=oneline
+# To see a very compressed log where each commit is one line
+$ git log --graph --oneline --decorate --all
+
+# These are just a few of the possible parameters you can use. For more, see
+$ git log --help
+
+# Most projects with multiple contributors have frequent merges, and gitk does a better job of visualizing their history.
+$ gitk --since="2 weeks ago" app/
+{% endhighlight %}
+
+
+
+
+---------------------------------------
+
+The Git Object Database
+-----------
+
+
+{% highlight bash %}
+$ mkdir test-project && cd $_
+$ git init
+  Initialized empty Git repository in test-project/.git/
+$ echo 'hello world' > Readme
+$ git add .
+$ git commit -m "initial commit"
+  [master (root-commit) fe876d7] initial commit
+   1 file changed, 1 insertion(+)
+   create mode 100644 Readme
+$ echo 'hello world!' > Readme
+$ git commit -am "add emphasis"
+  [master df8a5bd] add emphasis
+   1 file changed, 1 insertion(+), 1 deletion(-)
+{% endhighlight %}
+
+It turns out that every object in the Git history is stored under a 40-digit hex name. That name is the SHA-1 hash of the object’s contents. The 7 char hex strings here are simply the abbreviation of such 40 character long strings.
+
+We can ask Git about this particular object with the `cat-file` command.
+
+{% highlight bash %}
+$ git cat-file
+  usage: git cat-file (-t|-s|-e|-p|<type>|--textconv) <object>
+     or: git cat-file (--batch|--batch-check) < <list_of_objects>
+
+  <type> can be one of: blob, tree, commit, tag
+    -t              show object type
+    -s              show object size
+    -e              exit with zero when there's no error
+    -p              pretty-print object's content
+    --textconv      for blob objects, run textconv on object's content
+    --batch         show info and content of objects fed from the standard input
+    --batch-check   show info about objects fed from the standard input
+
+$ git cat-file -t fe876d7
+$ git cat-file commit fe876d7
+  tree 75eb93ca2dadfd16966679a9d5714118c77b6219
+  author retrcult <retrcult@github.com> 1465032128 +0800
+  committer retrcult <retrcult@github.com> 1465032128 +0800
+
+  initial commit
+{% endhighlight %}
+
+A tree can refer to one or more "blob" objects, each corresponding to a file. In addition, a tree can also refer to other tree objects, thus creating a directory hierarchy. You can examine the contents of any tree using `ls-tree`:
+
+{% highlight bash %}
+$ git ls-tree fe876d7
+  100644 blob 3b18e512dba79e4c8300dd08aeb37f8e728b8dad  Readme
+$ git cat-file -t 3b18e512
+# Using SHA-1 hash (a reference to that file's data) above
+  blob
+$ git cat-file blob 3b18e512
+  hello world
+{% endhighlight %}
+
+{% highlight bash %}
+$ find .git/objects/
+# The contents of these files is just the compressed data plus a header identifying their length and their type. The type is either a blob, a tree, a commit, or a tag.
+  .git/objects/
+  .git/objects/df
+  .git/objects/df/8a5bd442b657193d36f3a319a33a099230e817
+  .git/objects/pack
+  .git/objects/3b
+  .git/objects/3b/18e512dba79e4c8300dd08aeb37f8e728b8dad
+  .git/objects/26
+  .git/objects/26/1f66e99f232e2a88fae5c0e8c55873be6938da
+  .git/objects/fe
+  .git/objects/fe/876d717b95280ee9b0471198439389b6c74a2e
+  .git/objects/info
+  .git/objects/a0
+  .git/objects/a0/423896973644771497bdc03eb99d5281615b51
+  .git/objects/75
+  .git/objects/75/eb93ca2dadfd16966679a9d5714118c77b6219
+
+$ cat .git/HEAD
+# It tells us which branch we’re currently on.
+  ref: refs/heads/master
+$ cat .git/refs/heads/master
+  df8a5bd442b657193d36f3a319a33a099230e817
+$ git cat-file commit df8a5bd4
+  tree 261f66e99f232e2a88fae5c0e8c55873be6938da
+  parent fe876d717b95280ee9b0471198439389b6c74a2e
+  author retrcult <retrcult@github.com> 1465032203 +0800
+  committer retrcult <retrcult@github.com> 1465032203 +0800
+
+  add emphasis
+$ git ls-tree df8a5bd4
+  100644 blob a0423896973644771497bdc03eb99d5281615b51  Readme
+$ git cat-file blob a0423896
+  hello world!
+{% endhighlight %}
+
+So now we know how Git uses the object database to represent a project’s history:
+
+* "commit" objects refer to "tree" objects representing the snapshot of a directory tree at a particular point in the history, and refer to "parent" commits to show how they’re connected into the project history.
+
+* "tree" objects represent the state of a single directory, associating directory names to "blob" objects containing file data and "tree" objects containing subdirectory information.
+
+* "blob" objects contain file data without any other structure.
+
+* References to commit objects at the head of each branch are stored in files under <i>.git/refs/heads/</i>.
+
+* The name of the current branch is stored in <i>.git/HEAD</i>.
+
+Note, by the way, that lots of commands take a tree as an argument. But as we can see above, a tree can be referred to in many different ways—​ (1) by the SHA-1 name for that tree, (2) by the name of a commit that refers to the tree, (3) by the name of a branch whose head refers to that tree, etc.--and most such commands can accept any of these names.
+
+
+
+
+The index file
+-----------
+
+The primary tool we’ve been using to create commits is `git-commit -a`, which creates a commit including every change you’ve made to your working tree. But what if you want to commit changes only to certain files? Or only certain changes to certain files?
+
+{% highlight bash %}
+$ echo "hello world, again" > Readme
+
+$ git diff
+  diff --git a/Readme b/Readme
+  index a042389..b5205f3 100644
+  --- a/Readme
+  +++ b/Readme
+  @@ -1 +1 @@
+  -hello world!
+  +hello world, again
+$ git diff --cached
+
+$ git add Readme
+$ git diff
+$ git diff --cached
+  diff --git a/Readme b/Readme
+  index a042389..b5205f3 100644
+  --- a/Readme
+  +++ b/Readme
+  @@ -1 +1 @@
+  -hello world!
+  +hello world, again
+$ git diff HEAD
+  diff --git a/Readme b/Readme
+  index a042389..b5205f3 100644
+  --- a/Readme
+  +++ b/Readme
+  @@ -1 +1 @@
+  -hello world!
+  +hello world, again
+
+$ git ls-files --stage
+  100644 b5205f3e47dc84c3ed1fb3c277ad4868c4c5869c 0 Readme
+$ git cat-file -t b5205f3e
+  blob
+$ git cat-file blob b5205f3e
+  hello world, again
+{% endhighlight %}
+
+`git diff` is comparing against the index file, which is stored in <i>.git/index</i> in a binary format, but whose contents we can examine with `ls-files`.
+
+What `git add` did was store a new blob and then put a reference to it in the index file. If we modify the file again, we’ll see that the new modifications are reflected in the `git diff` output:
+
+{% highlight bash %}
+$ echo 'again?' >> Readme
+$ git diff
+  diff --git a/Readme b/Readme
+  index b5205f3..e74f8dd 100644
+  --- a/Readme
+  +++ b/Readme
+  @@ -1 +1,2 @@
+   hello world, again
+  +again?
+
+$ git commit -m "repeat"
+  [master 7f84961] repeat
+   1 file changed, 1 insertion(+), 1 deletion(-)
+
+$ echo "goodbye, world" > close.txt
+$ git add close.txt
+$ git ls-files --stage
+  100644 b5205f3e47dc84c3ed1fb3c277ad4868c4c5869c 0 Readme
+  100644 8b9743b20d4b15be3955fc8d5cd2b09cd2336138 0 close.txt
+$ git cat-file blob 8b9743b2
+  goodbye, world
+$  git status
+   On branch master
+   Changes to be committed:
+     (use "git reset HEAD <file>..." to unstage)
+   new file:   close.txt
+   Changes not staged for commit:
+     (use "git add <file>..." to update what will be committed)
+     (use "git checkout -- <file>..." to discard changes in working directory)
+   modified:   Readme
+
+{% endhighlight %}
+
+By default git commit uses the index to create the commit, not the working tree; the "-a" option to commit tells it to first update the index with all changes in the working tree.
+
+Since the current state of <i>close.txt</i> is cached in the index file, it is listed as "Changes to be committed". Since <i>file.txt</i> has changes in the working directory that aren’t reflected in the index, it is marked "changed but not updated". At this point, running `git commit` would create a commit that added <i>close.txt</i> (with its new contents), but that didn’t modify <i>file.txt</i>.
+
+Also, note that a bare git diff shows the changes to <i>file.txt</i>, but not the addition of <i>close.txt</i>, because the version of <i>close.txt</i> in the index file is identical to the one in the working directory.
 
 
 
 
 
 
+---------------------------------------
 
 
+Reference
+-----------
 
+* [git - the simple guide](http://rogerdudler.github.io/git-guide/)
 
-
-
-
-
-
-
-Ref:
-
-* [1](http://rogerdudler.github.io/git-guide/)
-
-* [2](https://git-scm.com/docs/gittutorial)
+* [gittutorial](https://git-scm.com/docs/gittutorial)
 
 
