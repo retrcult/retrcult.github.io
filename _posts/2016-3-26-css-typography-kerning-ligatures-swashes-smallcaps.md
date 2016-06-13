@@ -106,8 +106,8 @@ The reason I prefer this setting is the browser support. Font-variant will enabl
 ### Further Reading
 
 
-[OpenType features in web browsers — Tests](https://www.typotheque.com/articles/opentype_features_in_web_browsers_-_tests)<br>
-[font-feature-settings - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings)<br>
-[Syntax for OpenType features in CSS | Typekit](https://helpx.adobe.com/typekit/using/open-type-syntax.html)<br>
-[CSS Fonts Module Level 3 | W3C](https://drafts.csswg.org/css-fonts-3/#font-rend-props)<br>
+[OpenType features in web browsers — Tests](https://www.typotheque.com/articles/opentype_features_in_web_browsers_-_tests) \\
+[font-feature-settings - CSS >> MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings) \\
+[Syntax for OpenType features in CSS >> Typekit](https://helpx.adobe.com/typekit/using/open-type-syntax.html) \\
+[CSS Fonts Module Level 3 >> W3C](https://drafts.csswg.org/css-fonts-3/#font-rend-props)
 

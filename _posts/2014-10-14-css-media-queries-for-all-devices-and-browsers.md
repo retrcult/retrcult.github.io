@@ -147,9 +147,9 @@ $break-points: (
 }
 {% endhighlight %}
 
-[Conditional Media Query Mixin | Codepen](http://codepen.io/dsheiko/pen/KeLGy)<br>
-[sass-mediaqueries | Github](https://raw.githubusercontent.com/paranoida/sass-mediaqueries/master/_media-queries.scss)<br>
-[Media Queries with superpowers | Github](https://github.com/sass-mq/sass-mq)<br>
+[Conditional Media Query Mixin -- Codepen](http://codepen.io/dsheiko/pen/KeLGy)<br>
+[sass-mediaqueries -- Github](https://raw.githubusercontent.com/paranoida/sass-mediaqueries/master/_media-queries.scss)<br>
+[Media Queries with superpowers -- Github](https://github.com/sass-mq/sass-mq)<br>
 
 
 

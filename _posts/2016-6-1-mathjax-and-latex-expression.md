@@ -30,7 +30,7 @@ MathJax 入门帮助
 
 推荐使用 [StackEdit](https://stackedit.io/editor) 学习 MathJax 的语法，它支持 Markdown 和 MathJax。
 
-使用 [Detexify](http://detexify.kirelabs.org/classify.html)，你可以在网页上画出符号，Detexify 会给出相似的符号及其代码，但是不能保证它给出的符号可以在 MathJax 中使用，你可以参考 [Supported LaTeX commands | MathJax](http://docs.mathjax.org/en/latest/tex.html#supported-latex-commands) 或 [$\TeX$ Commands available in MathJax](http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm) 以确定 MathJax 是否支持此符号。
+使用 [Detexify](http://detexify.kirelabs.org/classify.html)，你可以在网页上画出符号，Detexify 会给出相似的符号及其代码，但是不能保证它给出的符号可以在 MathJax 中使用，你可以参考 [Supported LaTeX commands >> MathJax](http://docs.mathjax.org/en/latest/tex.html#supported-latex-commands) 或 [$\TeX$ Commands available in MathJax](http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm) 以确定 MathJax 是否支持此符号。
 
 
 
@@ -397,6 +397,6 @@ $$ \sin\theta+\sin\varphi= 2\sin[(\theta+\varphi)/2]\cos[(\theta-\varphi)/2]  $$
 参考文章
 -----------
 
-[MathJax basic tutorial and quick reference | Mathematics Stack Exchange](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference/5044)
+[MathJax basic tutorial and quick reference >> Mathematics Stack Exchange](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference/5044)
 
 

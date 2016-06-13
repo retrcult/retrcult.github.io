@@ -94,7 +94,7 @@ Alan Cooper, Bill Scott, Brad Frost, Brenda Laurel, Brenda Sanderson, Dan Saffer
 
 ##### 11. [Balsamiq](http://balsamiq.com/)
 
-[交互设计师必藏：50个线框图套件和在线设计工具 | 优设](http://www.uisdc.com/interaction-kits)
+[交互设计师必藏：50个线框图套件和在线设计工具 -- 优设](http://www.uisdc.com/interaction-kits)
 
 
 

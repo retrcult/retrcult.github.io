@@ -8,4 +8,4 @@ tags: [JavaScript, StyleGuide]
 
 [Website Style Guide Resources](http://styleguides.io/)
 
-[有哪些比较好的 JavaScript 代码风格？ | 知乎](https://www.zhihu.com/question/19738255)
+[有哪些比较好的 JavaScript 代码风格？ -- 知乎](https://www.zhihu.com/question/19738255)
