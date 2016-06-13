@@ -34,9 +34,9 @@ $ git config --global user.email
 {% endhighlight %}
 
 {% highlight bash %}
-git config --global credential.helper cache
+$ git config --global credential.helper cache
 # Set git to use the credential memory cache
-git config --global credential.helper 'cache --timeout=3600'
+$ git config --global credential.helper 'cache --timeout=3600'
 # Set the cache to timeout after 1 hour (setting is in seconds)
 {% endhighlight %}
 
@@ -46,6 +46,13 @@ $ git config color.ui true
 
 $ git config format.pretty oneline
 # Show log on just one line per commit
+
+$ git config --global alias.lol "log --pretty=oneline --abbrev-commit --graph --decorate"
+# A nice alias you can set up which shows abbreviated commits and a nice graph of branches with the messages on a single line
+$ git lol
+  * 7f84961 (HEAD, tag: v1.1.0, tag: to-be-tested, master) repeat
+  * df8a5bd add emphasis
+  * fe876d7 initial commit
 {% endhighlight %}
 
 The complete configuration is visible using `git config -l`, and the `git-config` man page explains the meaning of each option.
@@ -69,6 +76,9 @@ If you have any local copies of personal repositories you have created or forked
 
 {% highlight bash %}
 $ git remote -v
+# Show URLs of each remote server
+$ git remote show <name>
+# Give more details about each
 {% endhighlight %}
 
 
@@ -129,7 +139,10 @@ $ git init
   Initialized empty Git repository in .git/
 
 $ git add .
-# Tell Git to take a snapshot of the contents of all files under the current directory
+# Tell Git to take a snapshot of the contents of all files under the current directory, or
+$ git add -i
+# To commit certain files or parts of files in interactive mode.
+
 # This snapshot is now stored in a temporary staging area which Git calls the "index"
 
 $ git commit
@@ -161,6 +174,72 @@ $ git status
 
 
 
+
+### Ignoring Files
+
+Some common <i>.gitignore</i> configurations
+
+{% highlight bash %}
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+/tmp
+/log
+*.log
+*.sql
+*.sqlite
+
+# Dependency directories
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+*~
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Rails.gitignore
+Gemfile.lock
+/.bundle
+/vendor/bundle
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Jekyll.gitignore
+_site/
+
+## sass.gitignore
+.sass-cache/
+*.css.map
+{% endhighlight %}
+
+
+[A collection of useful .gitignore templates](https://github.com/github/gitignore)
+
+
+
 ### Pushing Changes
 
 Your changes are now in the **HEAD** of your local working copy.
@@ -176,6 +255,13 @@ To send those changes to your remote repository, execute
 $ git push origin master
 {% endhighlight %}
 
+If you want to delete a branch from the server (note the colon before the branch name):
+
+{% highlight bash %}
+$ git push origin :experimental
+{% endhighlight %}
+
+
 
 
 ### Replacing Local Changes
@@ -185,14 +271,27 @@ In case you did something wrong, you can replace local changes using the command
 {% highlight bash %}
 $ git checkout -- <filename>
 # Replace the changes in your working tree with the last content in HEAD. Changes already added to the index, as well as new files, will be kept.
+$ git checkout feature132 flash/foo.fla
+$ git add flash/foo.fla
+
+# Another way is to cat the file from git to the normal filename:
+$ git show feature132:flash/foo.fla > feature132-foo.fla
+# Check out master-foo.fla and feature132-foo.fla
+# Let's say we decide that feature132's is correct
+$ rm flash/foo.fla
+$ mv feature132-foo.fla flash/foo.fla
+$ git add flash/foo.fla
 {% endhighlight %}
 
-If you instead want to drop all your local changes and commits, fetch the latest history from the server and point your local master branch at it like this
+If you instead want to drop all your local changes and commits, fetch the latest history from the server and point your local master branch at it like this:
 
 {% highlight bash %}
 git fetch origin
 git reset --hard origin/master
+# Or bring a branch to point to a completely different SHA1
+$ git reset --hard SHA1_OF_HASH
 {% endhighlight %}
+
 
 
 
@@ -249,7 +348,7 @@ $ git merge experimental
 # See which files are unmerged at any point after a merge conflict
 $ git status
 # or
-$ git diff
+$ git diff --merge
 # If you want to use a graphical tool to resolve these issues, you can run `git mergetool`
 
 # Once you’ve edited the files to resolve the conflicts
@@ -259,11 +358,27 @@ $ git commit -a
 $ git branch -d experimental
 # This command ensures that the changes in the experimental branch are already in the current branch
 
+# If you aren’t sure which branches still have unique work on them — so you know which you need to merge and which ones can be removed, there are two switches to git branch that help:
+$ git branch --merged
+# Show branches that are not merged in to your current branch
+$ git branch --no-merged
+# Show branches that are all merged in to your current branch
+
 # You can also create a new branch and switch to it using
-$ git checkout -b crazy-idea
+$ git checkout -b new-idea
+
+# If you want to rename a local branch
+$ git checkout -b crazy-idea new-idea
+$ git branch -d new-idea
+# Also, if you only specify one branch it’ll rename your current branch
+# in `crazy-idea` branch
+$ git branch -m super-crazy-idea
 
 # If you regret it, you can always delete the branch with
-$ git branch -D crazy-idea
+$ git branch -D super-crazy-idea
+
+# If you delete a branch super-crazy-idea with `-D` you can recreate it with SHA1 hash (You can often find the SHA1 hash using git reflog if you’ve accessed it recently):
+$ git branch super-crazy-idea SHA1_OF_HASH
 {% endhighlight %}
 
 
@@ -271,7 +386,134 @@ As a general rule, you should try to split your changes into small logical steps
 
 Don’t be afraid of making too small or imperfect steps along the way. You can always go back later and edit the commits with `git rebase --interactive` before you publish them. You can use `git stash save --keep-index` to run the test suite independent of other uncommitted changes.
 
+In Git you can drop your current work state in to a temporary storage area stack and then re-apply it later. The simple case is as follows:
 
+{% highlight bash %}
+$ git stash
+# Do something...
+$ git stash pop
+
+# Git will automatically create a comment based on the current commit message. If you’d prefer to use a custom message (as it may have nothing to do with the previous commit):
+$ git stash save "My stash message"
+
+# If you want to apply a particular stash from your list (not necessarily the last one) you can list them and apply it like this:
+$ git stash list
+ stash@{0}: On master: Changed to German
+ stash@{1}: On master: Language is now Italian
+$ git stash apply stash@{1}
+{% endhighlight %}
+
+
+
+### Committing to the Wrong Branch
+
+Let’s assume you committed to master but should have created a topic branch called experimental instead. To move those changes over, you can create a branch at your current point, rewind head and then checkout your new branch:
+
+{% highlight bash %}
+$ git branch experimental
+# Creates a pointer to the current master state
+$ git reset --hard master~3
+# Moves the master branch pointer back to 3 revisions ago
+$ git checkout experimental
+{% endhighlight %}
+
+This can be more complex if you’ve made the changes on a branch of a branch of a branch etc. Then what you need to do is rebase the change on a branch on to somewhere else:
+
+{% highlight bash %}
+$ git branch newtopic STARTPOINT
+$ git rebase oldtopic --onto newtopic
+{% endhighlight %}
+
+This is a cool feature, let’s say you’ve made 3 commits but you want to re-order them or edit them (or combine them):
+
+{% highlight bash %}
+$ git rebase -i master~3
+{% endhighlight %}
+
+Then you get your editor pop open with some instructions. All you have to do is amend the instructions to pick/squash/edit (or remove them) commits and save/exit. Then after editing you can `git rebase` — continue to keep stepping through each of your instructions.
+
+If you choose to edit one, it will leave you in the state you were in at the time you committed that, so you need to use git commit — amend to edit it.
+
+Note: **DO NOT COMMIT DURING REBASE** — only add then use `--continue`, `--skip` or `--abort`.
+
+
+
+### Storing/Retrieving from the File System
+
+Some projects (the Git project itself for example) store additional files directly in the Git file system without them necessarily being a checked in file.
+
+{% highlight bash %}
+$ man git-hash-object
+  DESCRIPTION
+    Computes the object ID value for an object with specified type with the contents of the named file (which can be outside of the work tree), and optionally writes the resulting object into the object database. Reports its object ID to its standard output. This is used by git cvsimport to update the index without modifying files in the work tree. When <type> is not specified, it defaults to "blob".
+  OPTIONS
+     -t <type>
+        Specify the type (default: "blob").
+     -w
+        Actually write the object into the object database.
+     --stdin
+        Read the object from standard input instead of from a file.
+     --stdin-paths
+        Read file names from stdin instead of from the command-line.
+     --path
+        Hash object as it were located at the given path. The location of file does not directly influence on the hash value, but path is used to determine what git filters should be applied to the object before it can be placed to the object database, and, as result of applying filters, the actual blob put into the object database may differ from the given file. This option is mainly useful for hashing temporary files located outside of the working directory or files read from stdin.
+     --no-filters
+         Hash the contents as is, ignoring any input filter that would have been chosen by the attributes mechanism, including the end-of-line conversion. If the file is read from standard input then this is always implied, unless the --path option is given.
+
+$ echo "test content" | git hash-object -w --stdin
+  d670460b4b4aece5915caf5c68d12f560a9fe3e4
+# At this point the object is in the database.
+$ git tag test d670460b
+$ git cat-file blob test
+  test content
+
+$ echo "create test file" > test-file.txt
+$ git hash-object -w test-file.txt
+  f0324dd777f25b8bfadbd236deea4f82bc878370
+$ echo "version 1" >> test-file.txt
+$ git hash-object -w test-file.txt
+  7bbe2919089aa9d3a0e8f516a81b624d55b02548
+$ echo "version 2" >> test-file.txt
+$ git hash-object -w test-file.txt
+  b8a5143681f66a52092aab1b00640c0d45572877
+$ git cat-file -p f0324dd7
+  create test file
+$ git cat-file -p b8a51436
+  create test file
+  version 1
+  version 2
+$ git cat-file -p f0324dd7 > test-file.txt
+$ cat test-file.txt
+  create test file
+$ git cat-file -p 7bbe2919 > test-file.txt
+$ cat test-file.txt
+  create test file
+  version 1
+{% endhighlight %}
+
+This can be useful for utility files that developers may need (passwords, gpg keys, etc) but you don’t want to actually check out on to disk every time (particularly in production).
+
+
+
+### Cleaning Up
+
+If you’ve committed some content to your branch (maybe you’ve imported an old repo from SVN) and you want to remove all occurrences of a file from the history:
+
+{% highlight bash %}
+$ git filter-branch --tree-filter 'rm -f *.class' HEAD
+{% endhighlight %}
+
+If you’ve already pushed to origin, but have committed the rubbish since then, you can also do this for your local system before pushing:
+
+{% highlight bash %}
+$ git filter-branch --tree-filter 'rm -f *.class' origin/master..HEAD
+{% endhighlight %}
+
+
+
+### Miscellaneous Tips
+
+tbc
 
 
 
@@ -366,6 +608,31 @@ someone$ git branch
 
 > Rule: Topic branches
 > Make a side branch for every topic (feature, bugfix, …​). Fork it off at the oldest integration branch that you will eventually want to merge it into.
+
+
+
+### Finding Who Dunnit
+
+Often it can be useful to find out who changed a line of code in a file.
+
+{% highlight bash %}
+$ git blame FILE
+{% endhighlight %}
+
+Sometimes the change has come from a previous file (if you’ve combined two files, or you’ve moved a function) so you can use:
+
+{% highlight bash %}
+$ # shows which file names the content came from
+$ git blame -C FILE
+{% endhighlight %}
+
+Sometimes it’s nice to track this down by clicking through changes and going further and further back. There’s a nice in-built gui for this:
+
+{% highlight bash %}
+$ git gui blame FILE
+{% endhighlight %}
+
+
 
 
 
@@ -469,6 +736,17 @@ $ git tag v2.5 1b2e1d63ff
 
 If you intend to share this name with other people (for example, to identify a release version), you should create a "tag" object, and perhaps sign it; see [git-tag](https://git-scm.com/docs/git-tag) for details.
 
+In Git there are two types of tag — a lightweight tag and an annotated tag. A lightweight tag is simply a named pointer to a commit. You can always change it to point to another commit. An annotated tag is a name pointer to a tag object, with it’s own message and history. As it has it’s own message it can be GPG signed if required.
+Creating the two types of tag is easy (and one command line switch different)
+
+{% highlight bash %}
+$ git tag to-be-tested
+
+$ git tag -a v1.1.0
+# Prompts for a tag message
+{% endhighlight %}
+
+
 Any Git command that needs to know a commit can take any of these names. For example:
 
 {% highlight bash %}
@@ -478,6 +756,9 @@ $ git branch stable v2.5
 # Start a new branch named "stable" based at v2.5
 $ git reset --hard HEAD^
 # Reset your current branch and working directory to its state at HEAD^
+
+# You can always see the differences between a local branch and a remote branch:
+$ git diff master..myRepo/master
 {% endhighlight %}
 
 > Be careful with that last command: in addition to losing any changes in the working directory, it will also remove all later commits from this branch. If this branch is the only branch containing those commits, they will be lost. Also, don’t use `git reset` on a publicly-visible branch that other developers pull from, as it will force needless merges on other developers to clean up the history. If you need to undo changes that you have pushed, use `git revert` instead.
@@ -505,14 +786,23 @@ $ git log stable..master
 # List commits made in the master branch but not in the stable branch
 $ git log v2.5..v2.6
 # Commits between v2.5 and v2.6
+$ git log feature/132 feature/145 ^master
+# View the commits on feature/132 and feature/145 that aren’t on master
 $ git log v2.5..
 # Commits since v2.5
 $ git log v2.5.. Makefile
 # Commits since v2.5 which modify Makefile
+$ git log lib/foo.rb
+# View commits of a particular file
 $ git log --author=someone
 # To see only the commits by someone
-$ git log --since="2 weeks ago"
-# Commits from the last 2 weeks
+$ git log --grep="Something in the message"
+# Search term that appears in the commit message
+$ git log --since=2.months.ago --until=1.day.ago
+# Commits from the last 2 weeks but not today
+# By default it will use **OR** to combine the query, but you can easily change it to use AND (if you have more than one criteria)
+$ git log --since=2.months.ago --until=1.day.ago --author=andy -S
+# return "something" --all-match
 $ git log --pretty=oneline
 # To see a very compressed log where each commit is one line
 $ git log --graph --oneline --decorate --all
@@ -537,13 +827,13 @@ The Git Object Database
 $ mkdir test-project && cd $_
 $ git init
   Initialized empty Git repository in test-project/.git/
-$ echo 'hello world' > Readme
+$ echo "hello world" > Readme
 $ git add .
 $ git commit -m "initial commit"
   [master (root-commit) fe876d7] initial commit
    1 file changed, 1 insertion(+)
    create mode 100644 Readme
-$ echo 'hello world!' > Readme
+$ echo "hello world!" > Readme
 $ git commit -am "add emphasis"
   [master df8a5bd] add emphasis
    1 file changed, 1 insertion(+), 1 deletion(-)
@@ -692,7 +982,7 @@ $ git cat-file blob b5205f3e
 What `git add` did was store a new blob and then put a reference to it in the index file. If we modify the file again, we’ll see that the new modifications are reflected in the `git diff` output:
 
 {% highlight bash %}
-$ echo 'again?' >> Readme
+$ echo "again?" >> Readme
 $ git diff
   diff --git a/Readme b/Readme
   index b5205f3..e74f8dd 100644
@@ -746,4 +1036,4 @@ Reference
 
 * [gittutorial](https://git-scm.com/docs/gittutorial)
 
-
+* [25 Tips for Intermediate Git Users](https://www.andyjeffries.co.uk/25-tips-for-intermediate-git-users/)

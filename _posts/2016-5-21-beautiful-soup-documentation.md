@@ -360,7 +360,7 @@ print(soup.html.string)
 {% endhighlight %}
 
 
-#### .strings 和 stripped_strings
+#### .strings & stripped_strings
 
 如果 tag 中包含多个字符串，可以使用 `.strings` 来循环获取：
 输出的字符串中可能包含了很多空格或空行，使用 `.stripped_strings` 可以去除多余空白内容：
@@ -422,16 +422,16 @@ for parent in link.parents:
 ### 兄弟节点 (Going Sideways)
 
 
-#### .next_sibling 和 .previous_sibling
+#### .next_sibling & .previous_sibling
 
 
-#### .next_siblings 和 .previous_siblings
+#### .next_siblings & .previous_siblings
 
 
 ### 回退和前进 (Going Back and Forth)
 
-#### .next_element 和 .previous_element
-#### .next_elements 和 .previous_elements
+#### .next_element & .previous_element
+#### .next_elements & .previous_elements
 
 
 
