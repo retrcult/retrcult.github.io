@@ -7,8 +7,6 @@ use_math: true
 
 [orig.Link](http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/)
 
-Config file:
-http://docs.mathjax.org/en/latest/config-files.html
 
 <!--more-->
 
@@ -43,11 +41,11 @@ MathJax 公式排版
 
 表示公式嵌入到文本段中。用 `$` 或者 `\\(` `\\)` 开启公式环境，例如，
 
-$ \sqrt{4} + e\^\pi $ 写作 `$ \sqrt{4} + e^\pi $`。
+$ \sqrt{4} + e^\pi $ 写作 `$ \sqrt{4} + e^\pi $`。
 
 $ f: \{1, 2, 3, ...\} \rightarrow \mathcal{B} $ 写作 `\\( f: \{1, 2, 3, ...\} \rightarrow \mathcal{B} \\)`。
 
-$ \sum_{r=0}\^n \binom{n}{r} v_a \geq 2\^n $ 写作 `$ \sum_{r=0}^n \binom{n}{r} v_a \geq 2^n $`。
+$ \sum_{r=0}^n \binom{n}{r} v_a \geq 2^n $ 写作 `$ \sum_{r=0}^n \binom{n}{r} v_a \geq 2^n $`。
 
 
 
@@ -56,7 +54,7 @@ $ \sum_{r=0}\^n \binom{n}{r} v_a \geq 2\^n $ 写作 `$ \sum_{r=0}^n \binom{n}{r}
 表示公式独自成为一个段落，居中显示。用 `$$` 或者 `\\[` `\\]` 开启公式环境，例如，
 
 > 假设 $ x = 1 $，我们有
-  \\[ 2\^n = (1+1)\^n = \sum_{i=0}\^n \binom{n}{r} 1\^r = \sum_{r=0}\^n \binom{n}{r} \\]
+  \\[ 2^n = (1+1)^n = \sum_{i=0}^n \binom{n}{r} 1^r = \sum_{r=0}^n \binom{n}{r} \\]
 
 该公式可以用 <br/>
 `$$ 2^n = (1+1)^n = \sum_{i=0}^n \binom{n}{r} 1^r = \sum_{r=0}^n \binom{n}{r} $$` 或 <br/>
@@ -89,13 +87,13 @@ $ \sum_{r=0}\^n \binom{n}{r} v_a \geq 2\^n $ 写作 `$ \sum_{r=0}^n \binom{n}{r}
 
 ### 公式标记与引用
 
-使用 `\tag{yourtag}` 来标记公式，如果想在之后引用该公式，则还需要加上 `\label{yourlabel}`，如 ` $$ a := x^2 - y^3 \tag{2.1}\label{2.1} $$ ` ：
+使用 `\tag{yourtag}` 来标记公式，如果想在之后引用该公式，则还需要加上 `\label{yourlabel}`，如 `a := x^2 - y^3 \tag{2.1}\label{2.1}` ：
 
-$$ a := x\^2 - y\^3 \tag{2.1}\label{2.1} $$
+$$ a := x^2 - y^3 \tag{2.1}\label{2.1} $$
 
-为了引用公式，可以使用 `\eqref{yourlabel}`，如 ` $$ a + y^3 \stackrel{\eqref{2.1}} = x^2 $$ ` ：
+为了引用公式，可以使用 `\eqref{yourlabel}`，如 `a + y^3 \stackrel{\eqref{2.1}} = x^2` ：
 
-$$ a + y\^3 \stackrel{\eqref{2.1}} = x\^2 $$
+$$ a + y^3 \stackrel{\eqref{2.1}} = x^2 $$
 
 通过超链接可以跳转到被引用公式位置。
 
@@ -148,11 +146,11 @@ $$ a + y\^3 \stackrel{\eqref{2.1}} = x\^2 $$
 
 需要注意的是，原始符号并不会随着公式大小缩放。但使用 `\left` `\right` 可以自适应地调整括号大小。例如，
 
-$$ \lbrace \sum_{i=0}\^n i\^2 = \frac{(n\^2+n)(2n+1)}{6}\rbrace\tag{3.1.7-1} $$
+$$ \lbrace \sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}\rbrace\tag{3.1.7-1} $$
 
-$$ \left\lbrace \sum_{i=0}\^n i\^2 = \frac{(n\^2+n)(2n+1)}{6} \right\rbrace \tag{3.1.7-2} \label{3.1.7-2} $$
+$$ \left\lbrace \sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6} \right\rbrace \tag{3.1.7-2} \label{3.1.7-2} $$
 
-$ \eqref{3.1.7-2} $ 写作 `$$ \left\lbrace \sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6} \right\rbrace $$`。
+$ \eqref{3.1.7-2} $ 写作 `\left\lbrace \sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6} \right\rbrace`。
 
 `\left` 和 `\right` 适用于下列几种符号：
 `(` `)`, `[` `]`, `\{` `\}`, `|`, `\vert`, `\Vert`, `\langle` `\rangle`, `\lceil` `\rceil`, `\lfloor` `\rfloor`。
@@ -161,9 +159,9 @@ $ \eqref{3.1.7-2} $ 写作 `$$ \left\lbrace \sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+
 
 ### 上标、下标
 
-上标 `^`，下标 `_`，例如 $ x_i\^2 $ 写作 `x_i^2`，$ \log_2 x $ 写作 `\log_2 x`。
+上标 `^`，下标 `_`，例如 $ x_i^2 $ 写作 `x_i^2`，$ \log_2 x $ 写作 `\log_2 x`。
 
-默认情况下，上下标符号仅对下一个组起作用。一个组即单个字符或者使用 `{…}` 包裹起来的内容。也就是说，如果使用 `10^10`，会得到 $ 10\^10 $，而 `10^{10}` 才是 $ 10\^{10} $。同时，大括号还能消除二义性，如 `x_i^2` 得到 $ x_i\^2 $，而 `x_{i^2}` 得到 $ x_{i\^2} $ ，再如 `{x^5}^6` 得到 $ {x\^5}\^6 $，而 `x^{5^6}` 得到 $ x\^{5\^6} $。
+默认情况下，上下标符号仅对下一个组起作用。一个组即单个字符或者使用 `{…}` 包裹起来的内容。也就是说，如果使用 `10^10`，会得到 $ 10^10 $，而 `10^{10}` 才是 $ 10^{10} $。同时，大括号还能消除二义性，如 `x_i^2` 得到 $ x_i^2 $，而 `x_{i^2}` 得到 $ x_{i^2} $ ，再如 `{x^5}^6` 得到 $ {x^5}^6 $，而 `x^{5^6}` 得到 $ x^{5^6} $。
 
 
 
@@ -204,10 +202,10 @@ $$ \sin\theta+\sin\varphi= 2\sin[(\theta+\varphi)/2]\cos[(\theta-\varphi)/2]  $$
 ### 求和与积分
 
 `\sum` 用来表示求和符号 $\sum$，其下标表示求和下限，上标表示上限。
-如 `\sum_1^n` 得到 $ \sum_1\^n $。
+如 `\sum_1^n` 得到 $ \sum_1^n $。
 
 `\int` 用来表示积分符号 $\int$，同样地，其上下标表示积分的上下限。
-如 `\int_{-\infty}^\infty e^{-\pi x^2}\,\mathrm{d}x=1` 得到 $ \int_{-\infty}\^\infty e\^{-\pi x\^2}\,\mathrm{d}x=1 $。
+如 `\int_{-\infty}^\infty e^{-\pi x^2}\,\mathrm{d}x=1` 得到 $ \int_{-\infty}^\infty e^{-\pi x^2}\,\mathrm{d}x=1 $。
 
 与此类似的符号还有，`\iint` 表示 $\iint$，`\prod` 表示 $\prod$，`\bigcup` 表示 $\bigcup$，`\bigcap` 表示 $\bigcap$。
 
@@ -333,7 +331,7 @@ $$ \sin\theta+\sin\varphi= 2\sin[(\theta+\varphi)/2]\cos[(\theta-\varphi)/2]  $$
 
 类似的，还有 `\bar x`，$ \bar x $，`\overline{xyz}`，$\overline{xyz}$; <br/>
 `\vec x`，$ \vec x $，`\overrightarrow{xy}`，$\overrightarrow{xy}$，`\overleftrightarrow{xy}`，$\overleftrightarrow{xy}$; <br/>
-以及在 $ \frac d{dx} x \dot x = \dot x\^2 + x \ddot x $ 中用到的 `\dot`和`\ddot`。
+以及在 $ \frac d{dx} x \dot x = \dot x^2 + x \ddot x $ 中用到的 `\dot`和`\ddot`。
 
 
 ### 更多的特殊符号
@@ -351,6 +349,9 @@ $$ \sin\theta+\sin\varphi= 2\sin[(\theta+\varphi)/2]\cos[(\theta-\varphi)/2]  $$
 
 本站的 MathJax 配置
 -----------
+
+Config file:
+http://docs.mathjax.org/en/latest/config-files.html
 
 {% highlight js %}
 <script type="text/x-mathjax-config">

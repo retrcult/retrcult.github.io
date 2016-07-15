@@ -14,7 +14,7 @@ Git Config Setup
 
 The `git config` command can be used to change your Git configuration.
 
-{% highlight bash %}
+{% highlight shell %}
 $ git config user.name "John Doe"
 # To set your username for a specific repository
 # Type the command in the root folder of your repository
@@ -33,14 +33,14 @@ $ git config --global user.email
 # Verify
 {% endhighlight %}
 
-{% highlight bash %}
+{% highlight shell %}
 $ git config --global credential.helper cache
 # Set git to use the credential memory cache
 $ git config --global credential.helper 'cache --timeout=3600'
 # Set the cache to timeout after 1 hour (setting is in seconds)
 {% endhighlight %}
 
-{% highlight bash %}
+{% highlight shell %}
 $ git config color.ui true
 # Use colorful git output
 
@@ -57,7 +57,7 @@ $ git lol
 
 The complete configuration is visible using `git config -l`, and the `git-config` man page explains the meaning of each option.
 
-{% highlight bash %}
+{% highlight shell %}
 $ man git-config
 # or
 $ git help config
@@ -74,7 +74,7 @@ If the email used in a commit matches a verified GitHub user account, the accoun
 
 If you have any local copies of personal repositories you have created or forked, you can find your username in the URL of the remote repository.
 
-{% highlight bash %}
+{% highlight shell %}
 $ git remote -v
 # Show URLs of each remote server
 $ git remote show <name>
@@ -88,7 +88,7 @@ If `git config user.name` reports the correct username for the repository you're
 
 Make sure you have not set the `GIT_COMMITTER_NAME` or `GIT_AUTHOR_NAME` variables. You can check their values with the following command:
 
-{% highlight bash %}
+{% highlight shell %}
 $ echo $GIT_COMMITTER_NAME
 # Print the value of GIT_COMMITTER_NAME
 $ echo $GIT_AUTHOR_NAME
@@ -132,7 +132,7 @@ Your local repository consists of three "<i>trees</i>" maintained by git. the fi
 
 Assume you have a tarball <i>project.tar.gz</i> with your initial work. You can place it under Git revision control as follows.
 
-{% highlight bash %}
+{% highlight shell %}
 $ tar xzf project.tar.gz
 $ cd project
 $ git init
@@ -179,7 +179,7 @@ $ git status
 
 Some common <i>.gitignore</i> configurations
 
-{% highlight bash %}
+{% highlight shell %}
 # Compiled source
 *.com
 *.class
@@ -245,19 +245,19 @@ _site/
 Your changes are now in the **HEAD** of your local working copy.
 If you have not cloned an existing repository and want to connect your repository to a remote server, you need to add it with
 
-{% highlight bash %}
+{% highlight shell %}
 $ git remote add origin https://github.com/my/repo.git
 {% endhighlight %}
 
 To send those changes to your remote repository, execute
 
-{% highlight bash %}
+{% highlight shell %}
 $ git push origin master
 {% endhighlight %}
 
 If you want to delete a branch from the server (note the colon before the branch name):
 
-{% highlight bash %}
+{% highlight shell %}
 $ git push origin :experimental
 {% endhighlight %}
 
@@ -268,7 +268,7 @@ $ git push origin :experimental
 
 In case you did something wrong, you can replace local changes using the command
 
-{% highlight bash %}
+{% highlight shell %}
 $ git checkout -- <filename>
 # Replace the changes in your working tree with the last content in HEAD. Changes already added to the index, as well as new files, will be kept.
 $ git checkout feature132 flash/foo.fla
@@ -285,7 +285,7 @@ $ git add flash/foo.fla
 
 If you instead want to drop all your local changes and commits, fetch the latest history from the server and point your local master branch at it like this:
 
-{% highlight bash %}
+{% highlight shell %}
 git fetch origin
 git reset --hard origin/master
 # Or bring a branch to point to a completely different SHA1
@@ -297,7 +297,7 @@ $ git reset --hard SHA1_OF_HASH
 
 ### Viewing Project History
 
-{% highlight bash %}
+{% highlight shell %}
 # At any point you can view the history of your changes using
 $ git log
 
@@ -311,7 +311,7 @@ $ git log --stat --summary
 
 Branches are cheap and easy, so this is a good way to try something out.
 
-{% highlight bash %}
+{% highlight shell %}
 $ git branch experimental
 # Create a new branch named "experimental"
 
@@ -388,7 +388,7 @@ Don’t be afraid of making too small or imperfect steps along the way. You can 
 
 In Git you can drop your current work state in to a temporary storage area stack and then re-apply it later. The simple case is as follows:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git stash
 # Do something...
 $ git stash pop
@@ -409,7 +409,7 @@ $ git stash apply stash@{1}
 
 Let’s assume you committed to master but should have created a topic branch called experimental instead. To move those changes over, you can create a branch at your current point, rewind head and then checkout your new branch:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git branch experimental
 # Creates a pointer to the current master state
 $ git reset --hard master~3
@@ -419,14 +419,14 @@ $ git checkout experimental
 
 This can be more complex if you’ve made the changes on a branch of a branch of a branch etc. Then what you need to do is rebase the change on a branch on to somewhere else:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git branch newtopic STARTPOINT
 $ git rebase oldtopic --onto newtopic
 {% endhighlight %}
 
 This is a cool feature, let’s say you’ve made 3 commits but you want to re-order them or edit them (or combine them):
 
-{% highlight bash %}
+{% highlight shell %}
 $ git rebase -i master~3
 {% endhighlight %}
 
@@ -442,7 +442,7 @@ Note: **DO NOT COMMIT DURING REBASE** — only add then use `--continue`,�
 
 Some projects (the Git project itself for example) store additional files directly in the Git file system without them necessarily being a checked in file.
 
-{% highlight bash %}
+{% highlight shell %}
 $ man git-hash-object
   DESCRIPTION
     Computes the object ID value for an object with specified type with the contents of the named file (which can be outside of the work tree), and optionally writes the resulting object into the object database. Reports its object ID to its standard output. This is used by git cvsimport to update the index without modifying files in the work tree. When <type> is not specified, it defaults to "blob".
@@ -499,13 +499,13 @@ This can be useful for utility files that developers may need (passwords, gpg ke
 
 If you’ve committed some content to your branch (maybe you’ve imported an old repo from SVN) and you want to remove all occurrences of a file from the history:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git filter-branch --tree-filter 'rm -f *.class' HEAD
 {% endhighlight %}
 
 If you’ve already pushed to origin, but have committed the rubbish since then, you can also do this for your local system before pushing:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git filter-branch --tree-filter 'rm -f *.class' origin/master..HEAD
 {% endhighlight %}
 
@@ -522,21 +522,21 @@ Using Git for Collaboration
 
 Suppose that you’ve started a new project with a Git repository in <i>/home/me/project</i>, and that someone, who has a home directory on the same machine, wants to contribute.
 
-{% highlight bash %}
+{% highlight shell %}
 someone$ git clone /home/me/project projectForked
 # Create a new directory "projectFork" containing a clone of your repository.
 {% endhighlight %}
 
 Then, someone makes some changes and commits them:
 
-{% highlight bash %}
+{% highlight shell %}
 # (someone edit files)
 someone$ git commit -a
 {% endhighlight %}
 
 When he’s ready, he tells you to pull changes from the repository at <i>/home/someone/projectForked</i>. You can do this with:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git pull /home/someone/projectForked master
 # The "pull" command performs two operations: it fetches changes from a remote branch, then merges them into the current branch.
 # This merges the changes from someone’s "master" branch into your current branch. If you’ve made your own changes in the meantime, then you may need to manually fix any conflicts.
@@ -546,7 +546,7 @@ Note that in general, you would want your local changes committed before initiat
 
 You can peek at what someone did without merging first
 
-{% highlight bash %}
+{% highlight shell %}
 $ git fetch /home/someone/projectForked master
 $ git log -p HEAD..FETCH_HEAD
 # Using the "fetch" command allows you to inspect what someone did, using a special symbol "FETCH_HEAD", in order to determine if he has anything worth pulling.
@@ -556,7 +556,7 @@ This operation is safe even if you have uncommitted local changes. The range not
 
 You can visualize what someone did by issuing the following command:
 
-{% highlight bash %}
+{% highlight shell %}
 $ gitk HEAD..FETCH_HEAD
 # This uses the same two-dot range notation we saw earlier with git log.
 
@@ -567,7 +567,7 @@ $ gitk HEAD...FETCH_HEAD
 
 When you are working in a small closely knit group, it is not unusual to interact with the same repository over and over again. By defining remote repository shorthand, you can make it easier:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git remote add theOther /home/someone/projectForked
 $ git fetch theOther
 
@@ -585,20 +585,20 @@ Note that git pull always merges into the current branch, regardless of what els
 
 Later, someone can update his repo with your latest changes using
 
-{% highlight bash %}
+{% highlight shell %}
 someone$ git pull
 {% endhighlight %}
 
 Note that he doesn’t need to give the path to your repository; when someone cloned your repository, Git stored the location of your repository in the repository configuration, and that location is used for pulls:
 
-{% highlight bash %}
+{% highlight shell %}
 someone$ git config --get remote.origin.url
 /home/me/project
 {% endhighlight %}
 
 Git also keeps a pristine copy of your master branch under the name "origin/master":
 
-{% highlight bash %}
+{% highlight shell %}
 someone$ git branch -r
   origin/HEAD -> origin/master
   origin/master
@@ -615,20 +615,20 @@ someone$ git branch
 
 Often it can be useful to find out who changed a line of code in a file.
 
-{% highlight bash %}
+{% highlight shell %}
 $ git blame FILE
 {% endhighlight %}
 
 Sometimes the change has come from a previous file (if you’ve combined two files, or you’ve moved a function) so you can use:
 
-{% highlight bash %}
+{% highlight shell %}
 $ # shows which file names the content came from
 $ git blame -C FILE
 {% endhighlight %}
 
 Sometimes it’s nice to track this down by clicking through changes and going further and further back. There’s a nice in-built gui for this:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git gui blame FILE
 {% endhighlight %}
 
@@ -696,7 +696,7 @@ Note the last point. Do not use `git pull` unless you actually want to merge the
 Exploring history
 -----------
 
-{% highlight bash %}
+{% highlight shell %}
 $ git log
   commit c3420f6449a990249575d2a3d028a4772060c357
   Author: retrcult <an@example.com>
@@ -719,7 +719,7 @@ git show experimental
 
 Every commit usually has one "parent" commit which points to the previous state of the project:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git show HEAD^
 # To see the parent of HEAD
 $ git show HEAD^1
@@ -739,7 +739,7 @@ If you intend to share this name with other people (for example, to identify a r
 In Git there are two types of tag — a lightweight tag and an annotated tag. A lightweight tag is simply a named pointer to a commit. You can always change it to point to another commit. An annotated tag is a name pointer to a tag object, with it’s own message and history. As it has it’s own message it can be GPG signed if required.
 Creating the two types of tag is easy (and one command line switch different)
 
-{% highlight bash %}
+{% highlight shell %}
 $ git tag to-be-tested
 
 $ git tag -a v1.1.0
@@ -749,7 +749,7 @@ $ git tag -a v1.1.0
 
 Any Git command that needs to know a commit can take any of these names. For example:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git diff v2.5 HEAD
 # Compare the current HEAD to v2.5
 $ git branch stable v2.5
@@ -765,21 +765,21 @@ $ git diff master..myRepo/master
 
 The `git grep` command can search for strings in any version of your project, so
 
-{% highlight bash %}
+{% highlight shell %}
 $ git grep "hello" v2.5
 # Search for all occurrences of "hello" in v2.5
 {% endhighlight %}
 
 If you leave out the commit name, git grep will search any of the files it manages in your current directory. So
 
-{% highlight bash %}
+{% highlight shell %}
 $ git grep "hello"
 # A quick way to search just the files that are tracked by Git
 {% endhighlight %}
 
 Many Git commands also take sets of commits, which can be specified in a number of ways. Here are some examples with git log:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git log --name-status
 # See only which files have changed
 $ git log stable..master
@@ -823,7 +823,7 @@ The Git Object Database
 -----------
 
 
-{% highlight bash %}
+{% highlight shell %}
 $ mkdir test-project && cd $_
 $ git init
   Initialized empty Git repository in test-project/.git/
@@ -843,7 +843,7 @@ It turns out that every object in the Git history is stored under a 40-digit hex
 
 We can ask Git about this particular object with the `cat-file` command.
 
-{% highlight bash %}
+{% highlight shell %}
 $ git cat-file
   usage: git cat-file (-t|-s|-e|-p|<type>|--textconv) <object>
      or: git cat-file (--batch|--batch-check) < <list_of_objects>
@@ -868,7 +868,7 @@ $ git cat-file commit fe876d7
 
 A tree can refer to one or more "blob" objects, each corresponding to a file. In addition, a tree can also refer to other tree objects, thus creating a directory hierarchy. You can examine the contents of any tree using `ls-tree`:
 
-{% highlight bash %}
+{% highlight shell %}
 $ git ls-tree fe876d7
   100644 blob 3b18e512dba79e4c8300dd08aeb37f8e728b8dad  Readme
 $ git cat-file -t 3b18e512
@@ -878,7 +878,7 @@ $ git cat-file blob 3b18e512
   hello world
 {% endhighlight %}
 
-{% highlight bash %}
+{% highlight shell %}
 $ find .git/objects/
 # The contents of these files is just the compressed data plus a header identifying their length and their type. The type is either a blob, a tree, a commit, or a tag.
   .git/objects/
@@ -937,7 +937,7 @@ The index file
 
 The primary tool we’ve been using to create commits is `git-commit -a`, which creates a commit including every change you’ve made to your working tree. But what if you want to commit changes only to certain files? Or only certain changes to certain files?
 
-{% highlight bash %}
+{% highlight shell %}
 $ echo "hello world, again" > Readme
 
 $ git diff
@@ -981,7 +981,7 @@ $ git cat-file blob b5205f3e
 
 What `git add` did was store a new blob and then put a reference to it in the index file. If we modify the file again, we’ll see that the new modifications are reflected in the `git diff` output:
 
-{% highlight bash %}
+{% highlight shell %}
 $ echo "again?" >> Readme
 $ git diff
   diff --git a/Readme b/Readme

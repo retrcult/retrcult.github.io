@@ -195,11 +195,11 @@ img {
 // Specify the color of the selection
 ::-moz-selection {
   color: $black;
-  background: $c4;
+  background: #CFEDEF; //$c4;
 }
 ::selection {
   color: $black;
-  background: $c4;
+  background: #CFEDEF; //$c4;
 }
 
 // Nicolas Gallagher's micro clearfix hack
@@ -427,6 +427,11 @@ footer {
 // added style
 //
 //
+
+small {
+  font-size: 0.912em;
+  letter-spacing: 0.018em;
+}
 
 sup {
   position: relative;

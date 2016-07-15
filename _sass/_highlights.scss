@@ -8,13 +8,15 @@
 }
 
 code {
+  position: relative;
+  top: -0.1em;
   font-family: "Anonymous Pro","Bitstream Vera Sans Mono",Consolas, monospace;
   font-size: em(15.51px);
   background-color: rgba($c3,0.62);
   color: #65334d;
   border-radius: 1px;
   margin: 0 2px;
-  padding: em(1.704,15.6) em(2,15.6) em(2,15.6) em(3,15.6);
+  padding: em(1.704,15.6) em(3,15.6) em(2,15.6) em(4,15.6);
 }
 
 pre {
@@ -23,6 +25,7 @@ pre {
   line-height: 1.42857;
 
   code {
+    top: 0;
     background: transparent;
     margin: 0; padding: 0;
   }
